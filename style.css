@@ -237,3 +237,22 @@ body{
     text-decoration: none;
     color: blueviolet;
 }
+.nav-izquierda{
+    position: fixed;
+    left: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: left;
+    flex-basis: 20%;
+    height: 50vh;
+    margin: 20px;
+    margin-left: 0;
+    background-color: rgb(247, 247, 247);
+    padding: 20px;
+    border-radius: 10px;
+    font-size: x-large;
+}
+.nav-izquierda i{
+    margin-right: 5px;
+}
