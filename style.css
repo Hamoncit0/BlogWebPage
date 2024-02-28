@@ -244,7 +244,7 @@ body{
     flex-direction: column;
     justify-content: space-between;
     align-items: left;
-    flex-basis: 20%;
+    width: 350px;
     height: 50vh;
     margin: 20px;
     margin-left: 0;
@@ -255,4 +255,14 @@ body{
 }
 .nav-izquierda i{
     margin-right: 5px;
+}
+.categorias-populares{
+    background-color: rgb(247, 247, 247);
+    margin: 10px;
+    padding: 20px;
+    margin-right: 0;
+    border-radius: 10px;
+}
+.list-img{
+    width: 50px;
 }
