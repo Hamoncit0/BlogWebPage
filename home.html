@@ -36,18 +36,46 @@
                 <button class="btn btn-primary" type="button">Search</button>
               </form>
             </li>
-            <p class="navbar-username">Username</p>
             <li>
               <a class="navbar-brand" href="#">
-                <img src="./imgs/empty.png" alt="Avatar Logo" style="width:40px;" class="rounded-pill"> 
+                <img src="./imgs/empty.png" alt="Avatar Logo" style="width:40px;" class="rounded-pill" onclick="settingsMenuToggle()"> 
               </a>
             </li>
+            <p class="navbar-username">Username</p>
           </ul>
           
          
          
         </div>
       
+        <div class="settings-menu">
+          <div class="settings-menu-inner">
+
+            <div class="user-profile">
+              <img src="imgs/empty.png" class="rounded-pill" alt="">
+              <div>
+                <p>Username</p>
+                <a href="#">Ver Perfil</a>
+              </div>
+            </div>
+            <div class="user-profile">
+              <img src="imgs//box-arrow-right.svg"  alt="">
+              <div>
+                <p>Cerrar Sesion?</p>
+                <a href="#">Salir</a>
+              </div>
+            </div>
+            <hr>
+            <div class="settings-links">
+              <img src="imgs/gear.svg" alt="" class="settings-icon">
+              <a href="#">Settings & Privacy</a>
+  
+            </div>
+
+          </div>
+          
+        </div>
+
       </nav>
      
      
@@ -147,7 +175,7 @@
             </div>
           </div>
          </div>
-
+         <button class="load-button btn btn-light">Cargar mas</button>
       </div>
       <div class="section" id="right">
         <div class="quien-seguir">
@@ -156,6 +184,9 @@
       </div>
      </div>
 
+     <div class="footer">
+      <p>Copyright 2024 - K-Connect</p>
+     </div>
 </body>
 
 
