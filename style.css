@@ -54,13 +54,16 @@ body{
     width: 250px;
 }
 .main{
+    margin-top: 60px;
     display: flex;
+    width: 100%;
+    justify-content: center;
 }
 .section{
     flex-basis: 25%;
 }
 .section-middle{
-    flex-basis: 50%;
+    flex-basis: 40%;
 }
 .make-a-Post{
     margin-top: 10px;
@@ -107,4 +110,68 @@ body{
 .add-to-post a{
     text-decoration: none;
     font-size: 15px;
+}
+.post-container{
+    width: 100%;
+    background-color: rgb(247, 247, 247);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+}
+.user-profile span{
+    font-size: 13px;
+    color: #9a9a9a;
+}
+
+.post-text{
+    margin: 15px 0;
+    font-size: 15px;
+}
+.post-text span{
+    font-weight: 500;
+    color: blueviolet;
+}
+.post-text a{
+    color: blueviolet;
+    text-decoration: none;
+}
+.post-image{
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 5px;
+}
+.navbar-username{
+    color: #fff;
+    margin: 4px;
+}
+.barra-nav{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+.post-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.activity-icons div i{
+    width: 18px;
+    margin-right: 10px;
+    color: #626262;
+}
+
+.activity-icons div i:hover{
+    width: 18px;
+    margin-right: 10px;
+    color: black;
+}
+.activity-icons div{
+    display: inline-flex;
+    align-items: center;
+    margin-right: 30px;
+
+}
+.post-row i{
+    color: #626262;
 }
