@@ -266,3 +266,38 @@ body{
 .list-img{
     width: 50px;
 }
+.profile {
+    margin-top: 10px;
+    width: 100%;
+    background-color: rgb(247, 247, 247);
+    border-radius: 10px;
+    padding: 20px;
+    columns: #626262;
+}   
+.profile-avatar{ 
+    position: relative;
+    top: -60px;
+    left: 0;
+    display: flex;
+    align-content:baseline ;
+    margin-bottom: 0;
+}
+.profile-avatar h2{
+    position: relative;
+    top: 55px;
+    height:10px
+}
+.profile-picture{
+    width: 100px;
+}
+.profile-banner{
+    width: 100%;
+    height: 250px;
+}
+.profile-info{
+margin-top: -40px;
+}
+
+.profile-menu{
+    width: 100%;
+}
