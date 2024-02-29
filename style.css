@@ -193,7 +193,7 @@ body{
     position: absolute;
     width: 90%;
     max-width: 350px;
-    height: 210px;
+    height: 130px;
     background-color: rgb(247, 247, 247);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0);
     border-radius: 10px;
@@ -245,7 +245,7 @@ body{
     justify-content: space-between;
     align-items: left;
     width: 350px;
-    height: 50vh;
+    height: 30vh;
     margin: 20px;
     margin-left: 0;
     background-color: rgb(247, 247, 247);
@@ -300,4 +300,13 @@ margin-top: -40px;
 
 .profile-menu{
     width: 100%;
+}
+.input-titulo{
+    width: 100%;
+    background-color: rgb(247, 247, 247);
+    border: 1px rgb(240, 240, 240);
+    border-bottom:1px solid #ccc;
+}
+.input-titulo:focus-visible{
+    outline: none;
 }
