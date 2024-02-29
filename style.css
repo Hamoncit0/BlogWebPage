@@ -313,3 +313,21 @@ body{
 .search-title span{
     color: blueviolet;
 }
+.advanced-search{
+    margin-top: 10px;
+    border: none;
+    background-color: rgb(247, 247, 247);
+    width:100%;
+    padding: 20px;
+}
+.category-button{
+    display: block;
+    margin: auto;
+    margin-left: 0;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    color: #626262;
+    width: 40%;
+    background-color: #fff;
+    margin-bottom: 10px;
+}
