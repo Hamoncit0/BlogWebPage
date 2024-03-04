@@ -31,10 +31,10 @@
           </ul>
           <ul class="navbar-nav justify-contend-end">
             <li>
-              <form class="d-flex" action="search.html" method="get" >
-                <input class="form-control me-2" type="text" placeholder="Buscar">
-                <button class="btn btn-primary" type="submit" >Buscar</button>
-              </form>
+                <form class="d-flex" action="search.html" method="get" >
+                  <input class="form-control me-2" type="text" placeholder="Buscar">
+                  <button class="btn btn-primary" type="submit" >Buscar</button>
+                </form>
             </li>
             <li>
               <a class="navbar-brand" href="#">
@@ -87,25 +87,7 @@
           </nav>
       </div>
       <div class="section-middle" id="middle">
-        <div class="make-a-Post">
-          <div class="user-profile">
-            <img src="imgs/empty.png" class="rounded-pill" alt="">
-            <div>
-              <p>Username</p>
-              <small>Categoría <i class="bi bi-caret-down-fill"></i></small>
-            </div>
-          </div>
-          
-          <div class="input-container form-floating">
-            <input type="text" name="" id="" class="input-titulo" placeholder="Titulo">
-            <textarea rows="3" placeholder="Contenido" id="floatingTextarea2" style="height: 100px" ></textarea>
-            <div class="add-to-post">
-            <a href="#">Agregar una foto <i class="bi bi-image-fill"></i></a>
-            <button class="btn btn-primary btn-sm">Publicar</button>
-          </div>
-        </div>
-
-         </div>
+        <p class="search-title">Buscaste: <span>Sanrio</span></p>
          <!-- Post #1 -->
          <div class="post-container">
           <div class="post-row">
@@ -118,14 +100,15 @@
               <span>Categoria: Sanrio</span>
             </div>
           </div>
+          
           <div class="dropstart">
             <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               
               <i class="bi bi-three-dots-vertical"></i>
             </button>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Eliminar publicacion</a></li>
-              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal1">Modificar publicacion</a></li>
+              <li><a class="dropdown-item" href="#">Eliminar publicacion</a></li>
+              <li><a class="dropdown-item" href="#">Modificar publicacion</a></li>
             </ul>
           </div>
           </div>
@@ -134,6 +117,7 @@
           <img src="imgs/image-feed.png" alt="" class="post-image">
           
          </div>
+         
          <!-- Post #2 -->
          <div class="post-container">
           <div class="post-row">
@@ -146,6 +130,7 @@
               <span>Categoria: Sanrio</span>
             </div>
           </div>
+          
           <div class="dropstart">
             <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               
@@ -175,6 +160,7 @@
               <span>Categoria: Sanrio</span>
             </div>
           </div>
+          
           <div class="dropstart">
             <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               
@@ -203,16 +189,17 @@
               <span>Categoria: Sanrio</span>
               </div>
             </div>
-            <div class="dropstart">
-              <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                
-                <i class="bi bi-three-dots-vertical"></i>
-              </button>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Eliminar publicacion</a></li>
-                <li><a class="dropdown-item" href="#">Modificar publicacion</a></li>
-              </ul>
-            </div>
+            
+          <div class="dropstart">
+            <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              
+              <i class="bi bi-three-dots-vertical"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Eliminar publicacion</a></li>
+              <li><a class="dropdown-item" href="#">Modificar publicacion</a></li>
+            </ul>
+          </div>
             </div>
             
           <h6 class="post-title">Titulo bonito</h6>
@@ -259,68 +246,12 @@
         </div>
       </div>
      </div>
-
+     
      <div class="footer">
-      <p>Copyright 2024 - K-Connect</p>
-      <p>Politicas de privacidad</p>
-      <p>Politicas de cookies</p>
-     </div>
-     <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar publicación</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ¿Estas seguro de que quieres eliminar esta publicación?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-        <button type="button" class="btn btn-primary">Si</button>
-      </div>
-    </div>
-  </div>
-</div>
-
- <!-- Modal Modificar publicacion-->
- <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar publicación</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body" >
-        <div class="make-a-Post">
-          <div class="make-a-Post">
-            <div class="user-profile">
-              <img src="imgs/empty.png" class="rounded-pill" alt="">
-              <div>
-                <p>Username</p>
-                <small>Categoría <i class="bi bi-caret-down-fill"></i></small>
-              </div>
-            </div>
-            
-            <div class="input-container form-floating">
-              <input type="text" name="" id="" class="input-titulo" placeholder="Titulo">
-              <textarea rows="3" placeholder="Contenido" id="floatingTextarea2" style="height: 100px" ></textarea>
-              <div class="add-to-post">
-              <a href="#">Agregar una foto <i class="bi bi-image-fill"></i></a>
-            </div>
-          </div>
-  
-           </div>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Modificar</button>
-      </div>
-    </div>
-  </div>
-</div>
+        <p>Copyright 2024 - K-Connect</p>
+        <p>Politicas de privacidad</p>
+        <p>Politicas de cookies</p>
+       </div>
 </body>
 
 
