@@ -14,6 +14,7 @@ Nombre VARCHAR(20),
 SNombre VARCHAR(20),
 ApPaterno VARCHAR(20),
 ApMaterno VARCHAR(20),
+Pass VARCHAR(16),
 FechaAlta DATETIME DEFAULT now()
 );
 
