@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -46,13 +47,18 @@ public class LogInServlet extends HttpServlet {
             usu = (Usuario) loginObj; //pero no podemos usar al vato que se la rifo pq es de tipo Object :(
             if(usu.getIdUsuario()!=0){
             //si entra es que existe :)
+                HttpSession MiSesion = request.getSession();
+                MiSesion.setAttribute("Username", usu.getUsuario());
+                
+                MiSesion.setAttribute("UserObj", usu);
+                System.out.println(usu.getUsuario());
                 pantalla = "home.jsp";
                 request.setAttribute("Usuario", usu);
                 request.setAttribute("error", 0);
             }
             else{
             //si llega aqui no existe :(
-                pantalla="login.jsp";
+                pantalla="logIn.jsp";
                 request.setAttribute("error", 1);
             
             }

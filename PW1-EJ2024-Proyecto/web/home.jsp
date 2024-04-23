@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@page import="entidades.Usuario"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -23,7 +24,8 @@
          <% 
             Usuario usuario = new Usuario(); 
             usuario = (Usuario) request.getAttribute("Usuario");
-
+            Usuario uwu = (Usuario) request.getSession().getAttribute("UserObj");
+            System.out.println("usuario conseguido del http en el Misesion uwu HOME:"+uwu.getUsuario());
         %>
             <!-- barra de navegacion de arriba -->
       <nav class="navbar navbar-expand-sm bg-primary navbar-dark barra-nav">
@@ -41,12 +43,12 @@
                 <a class="nav-link" href="#">Para ti</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="./advanced_search.html">Explora</a>
+                <a class="nav-link" href="./advanced_search.jsp">Explora</a>
               </li>
           </ul>
           <ul class="navbar-nav justify-contend-end">
             <li>
-              <form class="d-flex" action="search.html" method="get" >
+              <form class="d-flex" action="search.jsp" method="get" >
                 <input class="form-control me-2" type="text" placeholder="Buscar">
                 <button class="btn btn-primary" type="submit" >Buscar</button>
               </form>
@@ -56,7 +58,7 @@
                 <img src="./imgs/empty.png" alt="Avatar Logo" style="width:40px;" class="rounded-pill" onclick="settingsMenuToggle()"> 
               </a>
             </li>
-            <p class="navbar-username"><%out.println(usuario.getUsuario());%></p>
+            <p class="navbar-username"><%out.println(uwu.getUsuario());%></p>
             
           </ul>
           
@@ -70,8 +72,8 @@
             <div class="user-profile">
               <img src="imgs/empty.png" class="rounded-pill" alt="">
               <div>
-                <p><%out.println(usuario.getUsuario());%></p>
-                <a href="./profile.html">Ver Perfil</a>
+                <p><%out.println(uwu.getUsuario());%></p>
+                <a href="./profile.jsp">Ver Perfil</a>
               </div>
             </div>
             <div class="user-profile">
@@ -97,9 +99,9 @@
       <div class="section" id="left">
          <!-- barra de navegacion de la izquierda -->
             <nav class="nav flex-column nav-izquierda">
-              <a class="nav-link active" aria-current="page" href="./home.html"><i class="bi bi-house-door-fill"></i> Inicio</a>
-              <a class="nav-link" href="./advanced_search.html"><i class="bi bi-compass"></i> Explorar</a>
-              <a class="nav-link" href="./profile.html"><i class="bi bi-person-circle"></i> Perfil</a>
+              <a class="nav-link active" aria-current="page" href="./home.jsp"><i class="bi bi-house-door-fill"></i> Inicio</a>
+              <a class="nav-link" href="./advanced_search.jsp"><i class="bi bi-compass"></i> Explorar</a>
+              <a class="nav-link" href="./profile.jsp"><i class="bi bi-person-circle"></i> Perfil</a>
           </nav>
       </div>
       <div class="section-middle" id="middle">
@@ -107,7 +109,7 @@
           <div class="user-profile">
             <img src="imgs/empty.png" class="rounded-pill" alt="">
             <div>
-              <p><%out.println(usuario.getUsuario());%></p>
+              <p><%out.println(uwu.getUsuario());%></p>
               <div class="dropdown">
                 
                 <button class="btn btn-sm btn-light dropdown-toggle category-buttonPost" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -315,7 +317,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar publicación</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modificar publicación</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" >

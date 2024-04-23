@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="entidades.Usuario"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -114,6 +115,11 @@
                             <input type="password"  class="form-control" id="passwordConfirm" required>
                            
                         </div>
+                           
+                     <div class="profile-avatar">
+                      <img src="imgs/empty.png" alt="" class="rounded-pill profile-picture">
+                      <button class="btn btn-info">Poner foto de perfil :)</button>
+                     </div>
                            <button type="submit" id="btnRegister" class="btn btn-primary">Registrarse</button>
                     </form>
                 </div>

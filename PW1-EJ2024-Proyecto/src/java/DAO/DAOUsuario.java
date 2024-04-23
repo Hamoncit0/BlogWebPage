@@ -2,6 +2,7 @@
 package DAO;
 
 import entidades.Usuario;
+import java.io.*;
 import modelos.Database;
 import java.sql.*; //huele peligro :skull:
 
@@ -41,7 +42,7 @@ public class DAOUsuario {
             while(rs.next()){
                 log.setIdUsuario(rs.getInt("Idusuario"));
                 log.setUsuario(rs.getString("Usuario"));
-                log.setPass(rs.getString("Contraseña"));
+                log.setPass(rs.getString("Pass"));
                 
             }
             con.close();
@@ -64,7 +65,7 @@ public class DAOUsuario {
         Connection con;
         PreparedStatement pst;
         ResultSet rs;
-        String query = "INSERT INTO tb_usuario(Correo, Usuario, Pass, FechaNac, Edad, Nombre, SNombre, ApPaterno, ApMaterno, FechaAlta) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO tb_usuario(Correo, Usuario, Pass, FechaNac, Edad, Nombre, SNombre, ApPaterno, ApMaterno, FechaAlta, Foto) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
          try{
             //se conecta
             Class.forName(db.getDriver());
@@ -73,6 +74,9 @@ public class DAOUsuario {
             db.getUser(),
             db.getPass()
             );
+            //cosas de la imagen :/
+            File imageFile = new File("../../../web/imgs/empty.png");
+            byte[] imageData = new byte[(int) imageFile.length()];
             //Preparar el query
             pst = con.prepareStatement(query);
             pst.setString(1, usu.getCorreo());
@@ -85,6 +89,7 @@ public class DAOUsuario {
             pst.setString(8, usu.getApPaterno());
             pst.setString(9, usu.getApMaterno());
             pst.setTimestamp(10, Timestamp.valueOf(usu.getFechaAlta()));
+            pst.setBytes(11, imageData);
             //ejecutar el query
             int rows = pst.executeUpdate();
             if(rows>0){
