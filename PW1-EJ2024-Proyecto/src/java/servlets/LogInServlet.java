@@ -58,6 +58,7 @@ public class LogInServlet extends HttpServlet {
             }
             else{
             //si llega aqui no existe :(
+                request.setAttribute("idk", 1);
                 pantalla="logIn.jsp";
                 request.setAttribute("error", 1);
             

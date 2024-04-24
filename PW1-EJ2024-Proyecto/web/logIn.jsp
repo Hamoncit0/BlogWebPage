@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="entidades.Usuario"%>
+<%@ page import="java.io.*, java.net.*, java.util.*" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,6 +19,16 @@
         <link rel="stylesheet" href="./css/style.css">
     </head>
     <body>
+        <script type="text/javascript">
+        
+        window.onload = function() {
+            var alertMessage = <%= request.getAttribute("idk") %>;
+            if (alertMessage === 1) {
+                alert("Usuario no encontrado.");
+            }
+        };
+    </script>
+    <% System.out.println(request.getAttribute("idk"));%>
         <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
 
             <div class="container-fluid">
@@ -54,6 +65,7 @@
                     <label for="password" class="form-label">Contraseña</label>
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
+                <% %>
                 <div class="boton">
                     <button type="submit" class="btn btn-primary btn-lg inicio" >Iniciar Sesión</button>
                 </div>
@@ -132,6 +144,87 @@
             <p>Politicas de privacidad</p>
             <p>Politicas de cookies</p>
            </div>
+           <script>
+        document.getElementById("btnRegister").addEventListener("click", function(event) {
+            // Validar nombre
+            var firstName = document.getElementById("firstName").value;
+            var lastName = document.getElementById("lastName").value;
+            if (!/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(firstName) || !/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(lastName)) {
+                alert("Los nombres y apellidos deben contener solo letras.");
+                event.preventDefault();
+                return;
+            }
+        
+            // Validar fecha de nacimiento
+            var birthday = new Date(document.getElementById("birthday").value);
+            var today = new Date();
+            if (birthday >= today) {
+                alert("La fecha de nacimiento debe ser anterior al día de hoy.");
+                event.preventDefault();
+                return;
+            }
+        
+            // Validar correo electrónico
+            var email = document.getElementById("email").value;
+            if (!/\S+@\S+\.\S+/.test(email)) {
+                alert("El correo electrónico no es válido.");
+                event.preventDefault();
+                return;
+            }
+        
+            // Validar contraseña
+            var password = document.getElementById("passwordSignUp").value;
+            var passwordConfirm = document.getElementById("passwordConfirm").value;
+            
+            // Mínimo 8 caracteres
+            if (password.length < 8) {
+                alert("La contraseña debe tener al menos 8 caracteres.");
+                event.preventDefault();
+                return;
+            }
+        
+            // Mínimo una letra mayúscula
+            if (!/[A-Z]/.test(password)) {
+                alert("La contraseña debe contener al menos una letra mayúscula.");
+                event.preventDefault();
+                return;
+            }
+        
+            // Mínimo una letra minúscula
+            if (!/[a-z]/.test(password)) {
+                alert("La contraseña debe contener al menos una letra minúscula.");
+                event.preventDefault();
+                return;
+            }
+        
+            // Mínimo un número
+            if (!/\d/.test(password)) {
+                alert("La contraseña debe contener al menos un número.");
+                event.preventDefault();
+                return;
+            }
+        
+            // Mínimo un signo de puntuación
+            if (!/[\W_]/.test(password)) {
+                alert("La contraseña debe contener al menos un signo de puntuación.");
+                event.preventDefault();
+                return;
+            }
+        
+            // Confirmar contraseña
+            if (password !== passwordConfirm) {
+                alert("La confirmación de la contraseña no coincide.");
+                event.preventDefault();
+                return;
+            }
+        
+            // Si todas las validaciones pasan
+            alert("Usuario registrado con éxito.");
+        
+            // Si todas las validaciones pasan, se envía el formulario
+            document.getElementById("signUp").submit();
+        });
+        </script>
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
