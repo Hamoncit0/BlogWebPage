@@ -4,6 +4,7 @@
  */
 package servlets;
 
+import DAO.DAOCategoria;
 import DAO.DAOUsuario;
 import entidades.Usuario;
 import jakarta.servlet.RequestDispatcher;
@@ -15,15 +16,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-/**
- *
- * @author yazmi
- */
+import DAO.DAOPublicacion;
+import entidades.Categoria;
+import entidades.Publicacion;
+import java.util.List;
+
 @WebServlet(name = "LogInServlet", urlPatterns = {"/LogInServlet"})
 public class LogInServlet extends HttpServlet {
 
     
     DAOUsuario daoUsu = new DAOUsuario();
+    DAOPublicacion daoPub = new DAOPublicacion();
+    DAOCategoria daoCat = new DAOCategoria();
    //Metodos HTTP del LogIn Servlet
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -49,12 +53,24 @@ public class LogInServlet extends HttpServlet {
             //si entra es que existe :)
                 HttpSession MiSesion = request.getSession();
                 MiSesion.setAttribute("Username", usu.getUsuario());
-                
+                List<Publicacion> publicaciones = daoPub.consultarRecientes();
+                request.setAttribute("Recientes", publicaciones);
                 MiSesion.setAttribute("UserObj", usu);
+                
+                
+                List<Categoria>categorias=daoCat.ObtenerCategorias();
+                MiSesion.setAttribute("Categorias", categorias);
+                
+                List<Categoria>categoriasMasP=daoCat.ObtenerCategoriasMasPublicadas();
+                MiSesion.setAttribute("CategoriasBuscadas", categoriasMasP);
+                
                 System.out.println(usu.getUsuario());
                 pantalla = "home.jsp";
                 request.setAttribute("Usuario", usu);
                 request.setAttribute("error", 0);
+                
+                //publicaciones
+                //JTSL es una libreria para manejar objetos :)
             }
             else{
             //si llega aqui no existe :(

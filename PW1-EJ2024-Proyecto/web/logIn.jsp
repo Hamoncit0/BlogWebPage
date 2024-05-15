@@ -28,7 +28,7 @@
             }
         };
     </script>
-    <% System.out.println(request.getAttribute("idk"));%>
+   
         <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
 
             <div class="container-fluid">
@@ -84,7 +84,7 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="">
-                    <form id="signUp" action="SignUpServlet" method="post">
+                    <form id="signUp" action="SignUpServlet" method="post" enctype="multipart/form-data">
                            <h2>Registrate</h2>
                            <h3>Es rápido y sencillo</h3>
                            <div class="mb-3">
@@ -128,10 +128,12 @@
                            
                         </div>
                            
-                     <div class="profile-avatar">
-                      <img src="imgs/empty.png" alt="" class="rounded-pill profile-picture">
-                      <button class="btn btn-info">Poner foto de perfil :)</button>
-                     </div>
+                        <div class="profile-avatar">
+                            <img src="imgs/image-feed.png" alt="" class="rounded-pill profile-picture" id="preview">
+                            <label for="file-upload" class="btn btn-info">Elegir una foto</label>
+                            <input style="display:none;" name="file-upload" id="file-upload" type="file" accept="image/png, image/jpeg" class="btn btn-info boton-input" onchange="previewImage(event)"/>
+                           
+                           </div>
                            <button type="submit" id="btnRegister" class="btn btn-primary">Registrarse</button>
                     </form>
                 </div>
@@ -225,6 +227,19 @@
             document.getElementById("signUp").submit();
         });
         </script>
+         <script>
+              function previewImage(event) {
+                  var input = event.target;
+                  var reader = new FileReader();
+                  
+                  reader.onload = function(){
+                      var img = document.getElementById('preview');
+                      img.src = reader.result;
+                  };
+                  
+                  reader.readAsDataURL(input.files[0]);
+              }
+          </script>
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

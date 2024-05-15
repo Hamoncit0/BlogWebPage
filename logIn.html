@@ -102,6 +102,24 @@
                         <input type="password"  class="form-control" id="passwordConfirm" required>
                        
                     </div>
+                    <div class="profile-avatar">
+                      <img src="imgs/image-feed.png" alt="" class="rounded-pill profile-picture" id="preview">
+                      <label for="file-upload" class="btn btn-info">Elegir una foto</label>
+                      <input value="Elegir foto." id="file-upload" type="file" accept="image/png, image/jpeg" class="btn btn-info boton-input" onchange="previewImage(event)"/>
+                      <script>
+        function previewImage(event) {
+            var input = event.target;
+            var reader = new FileReader();
+            
+            reader.onload = function(){
+                var img = document.getElementById('preview');
+                img.src = reader.result;
+            };
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    </script>
+                     </div>
                        <button type="submit" id="btnRegister" class="btn btn-primary">Registrarse</button>
                 </form>
             </div>

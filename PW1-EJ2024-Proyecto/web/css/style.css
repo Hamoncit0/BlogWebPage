@@ -240,20 +240,13 @@ body{
     color: blueviolet;
 }
 .nav-izquierda{
-    position: fixed;
-    left: 80px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: left;
-    width: 350px;
-    height: 30vh;
-    margin: 20px;
-    margin-left: 0;
+    position: sticky;
+    top: 75px;
     background-color: rgb(247, 247, 247);
+    margin: 10px;
     padding: 20px;
     border-radius: 10px;
-    font-size: x-large;
+    font-size: 24px;
 }
 .nav-izquierda i{
     margin-right: 5px;
@@ -283,6 +276,7 @@ body{
 }
 .profile-picture{
     width: 200px;
+    height: 200px;
 }
 .profile-info{
     margin: 10px;
@@ -357,4 +351,18 @@ body{
     width: 40%;
     background-color: #fff;
     margin-bottom: 10px;
+}
+input[type="file"] {
+    display: none;
+  }
+  
+  .custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+.boton-input{
+    display: none;
+
 }

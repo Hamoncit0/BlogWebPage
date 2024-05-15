@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@page import="entidades.Usuario"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -69,7 +70,7 @@
               <img src="imgs/empty.png" class="rounded-pill" alt="">
               <div>
                 <p><%out.println(uwu.getUsuario());%></p>
-                <a href="./profile.jsp">Ver Perfil</a>
+                <a href="GetProfilePostsServlet">Ver Perfil</a>
               </div>
             </div>
             <div class="user-profile">
@@ -97,7 +98,7 @@
             <nav class="nav flex-column nav-izquierda">
               <a class="nav-link active" aria-current="page" href="./home.jsp"><i class="bi bi-house-door-fill"></i> Inicio</a>
               <a class="nav-link" href="./advanced_search.jsp"><i class="bi bi-compass"></i> Explorar</a>
-              <a class="nav-link" href="./profile.jsp"><i class="bi bi-person-circle"></i> Perfil</a>
+              <a class="nav-link" href="GetProfilePostsServlet"><i class="bi bi-person-circle"></i> Perfil</a>
           </nav>
       </div>
 
@@ -254,36 +255,14 @@
         <div class="categorias-populares">
           <h2>Categorias populares</h2>
           <ol class="list-group list-group-numbered">
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-              <div class="ms-2 me-auto">
-                <div class="fw-bold">Crochet</div>
-                19k publicaciones
-              </div>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-              <div class="ms-2 me-auto">
-                <div class="fw-bold">Dibujo</div>
-                16k publicaciones
-              </div>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-              <div class="ms-2 me-auto">
-                <div class="fw-bold">Música</div>
-                12k publicaciones
-              </div>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-              <div class="ms-2 me-auto">
-                <div class="fw-bold">Puzzles</div>
-                10k publicaciones
-              </div>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-              <div class="ms-2 me-auto">
-                <div class="fw-bold">Ropa</div>
-              8k publicaciones
-              </div>
-            </li>
+            <c:forEach items="${CategoriasBuscadas}" var="catb">
+                  <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                      <div class="fw-bold"><c:out value="${catb.getCategoria()}"></c:out></div>
+                      <c:out value="${catb.getCantidad()}"></c:out> publicaciones.
+                    </div>
+                  </li>
+              </c:forEach>
           </ol>
         </div>
       </div>

@@ -7,6 +7,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@page import="entidades.Usuario"%>
+<%@page import="entidades.Publicacion"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -70,7 +72,7 @@
           <img src="imgs/empty.png" class="rounded-pill" alt="">
           <div>
             <p><%= request.getSession().getAttribute("Username")%></p>
-            <a href="./profile.jsp">Ver Perfil</a>
+            <a href="GetProfilePostsServlet">Ver Perfil</a>
           </div>
         </div>
         <div class="user-profile">
@@ -94,7 +96,7 @@
     <div class="section" id="left">
         <!-- barra de navegacion de la izquierda -->
            <nav class="nav flex-column nav-izquierda">
-             <a class="nav-link active" aria-current="page" href="./home.jsp"><i class="bi bi-house-door-fill"></i> Inicio</a>
+             <a class="nav-link active" aria-current="page" href="GetPostsServlet"><i class="bi bi-house-door-fill"></i> Inicio</a>
              <a class="nav-link" href="./advanced_search.jsp"><i class="bi bi-compass"></i> Explorar</a>
              <a class="nav-link" aria-disabled="true"><i class="bi bi-person-circle"></i> Perfil</a>
          </nav>
@@ -111,127 +113,49 @@
                 <p>Nombre Completo: <%out.println(uwu.getNombre());%> <%out.println(uwu.getSNombre());%> <%out.println(uwu.getApPaterno());%> <%out.println(uwu.getApMaterno());%>   </p>
                 <p>Correo: <%out.println(uwu.getCorreo());%> </p>
                 <p>Edad: <%out.println(uwu.getEdad());%>  </p>
-                <p>Fecha de nacimiento: <%out.println(uwu.getFechaNac());%>  </p>
+                <p>Fecha de nacimiento: <%out.println(uwu.getFechaNacStr());%>  </p>
             </div>
             <div class="profile-menu btn-group">
                 <button type="button" class="btn btn-outline-primary">Publicaciones</button>
                 <button type="button" class="btn btn-outline-primary">Fotos</button>
             </div>
         </div>
-            <!-- Post #1 -->
-         <div class="post-container">
-            <div class="post-row">
-            <div class="user-profile">
-              <img src="imgs/empty.png" class="rounded-pill" alt="">
-              <div>
-                <p>Username</p>
-                <span>27 de Febrero de 2024 19:09 pm</span>
-                <br>
-                <span>Categoria: Sanrio</span>
-              </div>
+         <c:forEach items="${tusPosts}" var="pub">
+                 <div class="post-container" value="${pub.getIdPublicacion()}">
+          <div class="post-row">
+          <div class="user-profile">
+            <img src="imgs/empty.png" class="rounded-pill" alt="">
+            <div>
+              <p><c:out value="${pub.getUsuario()}"></c:out></p>
+              <span><c:out value="${pub.getFechaAlta()}"></c:out></span>
+              <br>
+              <span>Categoria: <c:out value="${pub.getCategoria()}"></c:out></span>
             </div>
-            <div class="dropstart">
-              <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                
-                <i class="bi bi-three-dots-vertical"></i>
-              </button>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Eliminar publicacion</a></li>
-                <li><a class="dropdown-item" href="#">Modificar publicacion</a></li>
-              </ul>
-            </div>
-            </div>
-            
-            <h6 class="post-title">Titulo bonito</h6>
-            <p class="post-text">Texto bonito uwu  </p>
-            <img src="imgs/image-feed.png" alt="" class="post-image">
-            
-           </div>
-           <!-- Post #2 -->
-           <div class="post-container">
-            <div class="post-row">
-            <div class="user-profile">
-              <img src="imgs/empty.png" class="rounded-pill" alt="">
-              <div>
-                <p>Username</p>
-                <span>27 de Febrero de 2024 19:09 pm</span>
-                <br>
-                <span>Categoria: Sanrio</span>
-              </div>
-            </div>
-            <div class="dropstart">
-              <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                
-                <i class="bi bi-three-dots-vertical"></i>
-              </button>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Eliminar publicacion</a></li>
-                <li><a class="dropdown-item" href="#">Modificar publicacion</a></li>
-              </ul>
-            </div>
-            </div>
-            
-            <h6 class="post-title">Titulo bonito</h6>
-            <p class="post-text">Texto bonito uwu <!--<a href="">#ItisPretty</a> <span>@Username1</span>!--> </p>
-            <img src="imgs/download.png" alt="" class="post-image">
-            
-           </div>
-           <!-- Post #3 -->
-           <div class="post-container">
-            <div class="post-row">
-            <div class="user-profile">
-              <img src="imgs/empty.png" class="rounded-pill" alt="">
-              <div>
-                <p>Username</p>
-                <span>27 de Febrero de 2024 19:09 pm</span>
-                <br>
-                <span>Categoria: Sanrio</span>
-              </div>
-            </div>
-            <div class="dropstart">
-              <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                
-                <i class="bi bi-three-dots-vertical"></i>
-              </button>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Eliminar publicacion</a></li>
-                <li><a class="dropdown-item" href="#">Modificar publicacion</a></li>
-              </ul>
-            </div>
-            </div>
-            
-            <h6 class="post-title">Titulo bonito</h6>
-            <p class="post-text">Texto bonito uwu </p>
-            <img src="imgs/image-feed1.png" alt="" class="post-image">
-           </div>
-            <!-- Post #4 -->
-          <div class="post-container">
-              <div class="post-row">
-              <div class="user-profile">
-                <img src="imgs/empty.png" class="rounded-pill" alt="">
-                <div>
-                  <p>Username</p>
-                  <span>27 de Febrero de 2024 19:09 pm</span>
-                  <br>
-                <span>Categoria: Sanrio</span>
-                </div>
-              </div>
-              <div class="dropstart">
-                <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  
-                  <i class="bi bi-three-dots-vertical"></i>
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Eliminar publicacion</a></li>
-                  <li><a class="dropdown-item" href="#">Modificar publicacion</a></li>
-                </ul>
-              </div>
-              </div>
+          </div>
               
-          <h6 class="post-title">Titulo bonito</h6>
-              <p class="post-text">Texto bonito uwu  </p>
+          <c:if test="${pub.getIDUsuario()== UserObj.getIdUsuario()}">
+          <div class="dropstart">
+            <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               
-            </div>
+              <i class="bi bi-three-dots-vertical"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Eliminar publicacion</a></li>
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal1">Modificar publicacion</a></li>
+            </ul>
+          </div>
+          </c:if>
+            
+          </div>
+          <h6 class="post-title"><c:out value="${pub.getTitulo()}"></c:out></h6>
+          <p class="post-text"><c:out value="${pub.getContenido()}"></c:out> </p>
+          <c:if test="${not empty pub.getImagen()}">
+          <img src="IMGSPFP/${pub.getImagen()}" alt="" class="post-image">
+              
+          </c:if>
+          
+         </div>
+              </c:forEach>
            <button class="load-button btn btn-light">Cargar mas</button>
      </div>
 
@@ -240,36 +164,14 @@
         <div class="categorias-populares">
           <h2>Categorias populares</h2>
           <ol class="list-group list-group-numbered">
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-              <div class="ms-2 me-auto">
-                <div class="fw-bold">Crochet</div>
-                19k publicaciones
-              </div>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-              <div class="ms-2 me-auto">
-                <div class="fw-bold">Dibujo</div>
-                16k publicaciones
-              </div>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-              <div class="ms-2 me-auto">
-                <div class="fw-bold">Música</div>
-                12k publicaciones
-              </div>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-              <div class="ms-2 me-auto">
-                <div class="fw-bold">Puzzles</div>
-                10k publicaciones
-              </div>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-              <div class="ms-2 me-auto">
-                <div class="fw-bold">Ropa</div>
-              8k publicaciones
-              </div>
-            </li>
+             <c:forEach items="${CategoriasBuscadas}" var="catb">
+                  <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                      <div class="fw-bold"><c:out value="${catb.getCategoria()}"></c:out></div>
+                      <c:out value="${catb.getCantidad()}"></c:out> publicaciones.
+                    </div>
+                  </li>
+              </c:forEach>
           </ol>
         </div>
       </div>

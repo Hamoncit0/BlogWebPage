@@ -6,13 +6,17 @@ import entidades.Usuario;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.io.File;
 import java.time.*;
 
 @WebServlet(name = "SignUpServlet", urlPatterns = {"/SignUpServlet"})
+@MultipartConfig
 public class SignUpServlet extends HttpServlet {
 
     
@@ -39,9 +43,25 @@ public class SignUpServlet extends HttpServlet {
             LocalDate birthday = LocalDate.parse(request.getParameter("birthday"));
             String email = request.getParameter("email");
             String password = request.getParameter("passwordSignUp");
+            String foto = request.getParameter("file-upload");
             
-
-            Usuario form = new Usuario(email, username, birthday, firstName, secondName, lastName, lastName2, password);
+            //guardar imagen
+            String uploadPath= "C:\\Users\\yazmi\\OneDrive\\Documents\\Facu\\6to semestre\\Programacion web Gp. 51\\PW1-EJ2024-Proyecto\\PW1-EJ2024-Proyecto\\PW1-EJ2024-Proyecto\\web\\IMGSPFP";
+            File fileSaveDir = new File (uploadPath);
+            if(!fileSaveDir.exists()){
+                fileSaveDir.mkdirs();
+            
+            }
+            //filename
+            String fileName = null;
+            Part part = request.getPart("file-upload");
+            
+            fileName = getFileName(part);
+            
+            if(fileName != ""){
+                part.write(uploadPath + File.separator + fileName);
+            }
+            Usuario form = new Usuario(email, username, birthday, firstName, secondName, lastName, lastName2, password, fileName);
             Usuario usu= new Usuario(); //este vato guarda
             
             Boolean signUp = daoUsu.signUp(form); //este vato se la rifa y consigue la info
@@ -68,4 +88,19 @@ public class SignUpServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private String getFileName(Part part){
+    String contentDisp = part.getHeader("content-disposition");
+          
+    String[] tokens = contentDisp.split(";");
+           
+    for(String token : tokens){
+           
+        if(token.trim().startsWith("filename")){
+            return token.substring(token.indexOf("=") +2, token.length()-1);
+        
+        }
+    }
+    
+    return "";
+    }
 }

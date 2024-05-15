@@ -68,7 +68,7 @@
                   <img src="imgs/empty.png" class="rounded-pill" alt="">
                   <div>
                     <p><%out.println(uwu.getUsuario());%> </p>
-                    <a href="./profile.jsp">Ver Perfil</a>
+                    <a href="GetProfilePostsServlet">Ver Perfil</a>
                   </div>
                 </div>
                 <div class="user-profile">
@@ -96,7 +96,7 @@
                 <nav class="nav flex-column nav-izquierda">
                   <a class="nav-link active" aria-current="page" href="./home.jsp"><i class="bi bi-house-door-fill"></i> Inicio</a>
                   <a class="nav-link" href="./advanced_search.jsp"><i class="bi bi-compass"></i> Explorar</a>
-                  <a class="nav-link" href="./profile.jsp"><i class="bi bi-person-circle"></i> Perfil</a>
+                  <a class="nav-link" href="GetProfilePostsServlet"><i class="bi bi-person-circle"></i> Perfil</a>
               </nav>
           </div>
           <div class="section-middle" id="middle">

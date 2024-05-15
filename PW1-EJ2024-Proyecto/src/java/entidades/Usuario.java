@@ -10,6 +10,7 @@ public class Usuario {
     private String Usuario;
     private String Foto;
     private LocalDate FechaNac;
+    private String FechaNacStr;
     private int Edad;
     private String Nombre;
     private String SNombre;
@@ -21,10 +22,12 @@ public class Usuario {
     public Usuario(){
 
     }
+    //login bien basico
     public Usuario(String Usuario, String Pass){
         this.Usuario = Usuario;
         this.Pass = Pass;
     }
+    //sign up :/
     public Usuario(String Correo, String Usuario, LocalDate FechaNac, String Nombre, String SNombre, String ApMaterno, String ApPaterno, String Pass){
         this.Correo = Correo;
         this.Usuario = Usuario;
@@ -44,7 +47,40 @@ public class Usuario {
         this.Edad=años; 
         this.FechaAlta = LocalDateTime.now();
     }
-
+    //sign up con foto :/
+    public Usuario(String Correo, String Usuario, LocalDate FechaNac, String Nombre, String SNombre, String ApMaterno, String ApPaterno, String Pass, String Foto){
+        this.Correo = Correo;
+        this.Usuario = Usuario;
+        this.FechaNac = FechaNac;
+        this.Nombre = Nombre;
+        this.SNombre = SNombre;
+        this.ApMaterno = ApMaterno;
+        this.ApPaterno = ApPaterno;
+        this.Pass = Pass;
+        this.Foto = Foto;
+        //ahorita
+        LocalDate ahorita = LocalDate.now();
+        //checa la diferencia
+        Period period = Period.between(FechaNac, ahorita);
+        //los pasa a numero de años
+        int años = period.getYears();
+        
+        this.Edad=años; 
+        this.FechaAlta = LocalDateTime.now();
+    }
+    //login chido 
+    public Usuario(String Correo, String Usuario, LocalDate FechaNac, String Nombre, String SNombre, String ApMaterno,String ApPaterno, String Pass, LocalDateTime FechaAlta, String Foto){
+        this.Correo = Correo;
+        this.Usuario = Usuario;
+        this.FechaNac = FechaNac;
+        this.SNombre = SNombre;
+        this.ApPaterno=ApPaterno;
+        this.ApMaterno = ApMaterno;
+        this.Pass = Pass;
+        this.FechaAlta = FechaAlta;
+        this.Foto = Foto;
+    
+    }
     public int getIdUsuario() {
         return IdUsuario;
     }
@@ -139,6 +175,14 @@ public class Usuario {
 
     public void setPass(String Pass) {
         this.Pass = Pass;
+    }
+
+    public String getFechaNacStr() {
+        return FechaNacStr;
+    }
+
+    public void setFechaNacStr(String FechaNacStr) {
+        this.FechaNacStr = FechaNacStr;
     }
     
 }
