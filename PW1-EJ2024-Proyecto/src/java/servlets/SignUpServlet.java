@@ -33,7 +33,7 @@ public class SignUpServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("LOGIN SERVLET POST");
+        System.out.println("SIGNUP SERVLET POST");
             //hacer datos para mandar al constructor de Usuario
             String firstName = request.getParameter("firstName");
             String secondName = request.getParameter("secondName");
@@ -43,26 +43,33 @@ public class SignUpServlet extends HttpServlet {
             LocalDate birthday = LocalDate.parse(request.getParameter("birthday"));
             String email = request.getParameter("email");
             String password = request.getParameter("passwordSignUp");
-            String foto = request.getParameter("file-upload");
             
-            //guardar imagen
-            String uploadPath= "C:\\Users\\yazmi\\OneDrive\\Documents\\Facu\\6to semestre\\Programacion web Gp. 51\\PW1-EJ2024-Proyecto\\PW1-EJ2024-Proyecto\\PW1-EJ2024-Proyecto\\web\\IMGSPFP";
-            File fileSaveDir = new File (uploadPath);
-            if(!fileSaveDir.exists()){
-                fileSaveDir.mkdirs();
             
-            }
             //filename
             String fileName = null;
             Part part = request.getPart("file-upload");
             
             fileName = getFileName(part);
-            
-            if(fileName != ""){
-                part.write(uploadPath + File.separator + fileName);
+            if(!fileName.isEmpty()){
+                //guardar imagen
+                String uploadPath= "C:\\Users\\yazmi\\OneDrive\\Documents\\Facu\\6to semestre\\Programacion web Gp. 51\\PW1-EJ2024-Proyecto\\PW1-EJ2024-Proyecto\\PW1-EJ2024-Proyecto\\web\\IMGSPFP";
+                File fileSaveDir = new File (uploadPath);
+                if(!fileSaveDir.exists()){
+                    fileSaveDir.mkdirs();
+
+                }
+                if(fileName != ""){
+                    part.write(uploadPath + File.separator + fileName);
+                }
             }
-            Usuario form = new Usuario(email, username, birthday, firstName, secondName, lastName, lastName2, password, fileName);
-            Usuario usu= new Usuario(); //este vato guarda
+            Usuario form;
+            if(fileName.isEmpty()){
+                form = new Usuario(email, username, birthday, firstName, secondName, lastName, lastName2, password);
+            
+            }else{
+                form= new Usuario(email, username, birthday, firstName, secondName, lastName, lastName2, password, fileName);
+            }
+            
             
             Boolean signUp = daoUsu.signUp(form); //este vato se la rifa y consigue la info
             String pantalla = "";
@@ -70,7 +77,7 @@ public class SignUpServlet extends HttpServlet {
             if(signUp){
             //si es true si se pudo hacer este pedo :)
                 pantalla = "logIn.jsp";
-                request.setAttribute("Usuario", usu);
+                request.setAttribute("Usuario", form);
                 request.setAttribute("error", 0);
             }
             else{

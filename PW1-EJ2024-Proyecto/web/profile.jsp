@@ -55,7 +55,13 @@
         </li>
         <li>
           <a class="navbar-brand" href="#">
-            <img src="./imgs/empty.png" alt="Avatar Logo" style="width:40px;" class="rounded-pill" onclick="settingsMenuToggle()"> 
+              <c:if test="${not empty UserObj.getFoto()}">
+                   <img src="./IMGSPFP/${UserObj.getFoto()}" alt="Avatar Logo" style="width:40px;" class="rounded-pill" onclick="settingsMenuToggle()"> 
+                </c:if>
+               <c:if test="${empty UserObj.getFoto()}">
+                   <img src="./imgs/empty.png"alt="Avatar Logo" style="width:40px;" class="rounded-pill" onclick="settingsMenuToggle()"> 
+               </c:if>
+            
           </a>
         </li>
         <p class="navbar-username"><%= request.getSession().getAttribute("Username")%></p>
@@ -69,7 +75,12 @@
       <div class="settings-menu-inner">
 
         <div class="user-profile">
-          <img src="imgs/empty.png" class="rounded-pill" alt="">
+                 <c:if test="${not empty UserObj.getFoto()}">
+                   <img src="./IMGSPFP/${UserObj.getFoto()}" alt="Avatar Logo"  class="rounded-pill"> 
+                </c:if>
+               <c:if test="${empty UserObj.getFoto()}">
+                   <img src="./imgs/empty.png" alt="Avatar Logo" class="rounded-pill"> 
+               </c:if>
           <div>
             <p><%= request.getSession().getAttribute("Username")%></p>
             <a href="GetProfilePostsServlet">Ver Perfil</a>
@@ -104,7 +115,13 @@
      <div class="section-middle" id="middle">
         <div class="profile">
             <div class="profile-avatar">
-                <img src="imgs/empty.png" alt="" class="rounded-pill profile-picture">
+                <c:if test="${not empty UserObj.getFoto()}">
+                   <img src="./IMGSPFP/${UserObj.getFoto()}" alt="" class="rounded-pill profile-picture"> 
+                </c:if>
+               <c:if test="${empty UserObj.getFoto()}">
+                   <img src="./imgs/empty.png" alt="" class="rounded-pill profile-picture"> 
+               </c:if>
+                
                 <h2 class="profile-name"><%= request.getSession().getAttribute("Username")%></h2>
                 <button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#myModal">Editar perfil</button>
             </div>
@@ -124,7 +141,12 @@
                  <div class="post-container" value="${pub.getIdPublicacion()}">
           <div class="post-row">
           <div class="user-profile">
-            <img src="imgs/empty.png" class="rounded-pill" alt="">
+              <c:if test="${not empty UserObj.getFoto()}">
+                   <img src="./IMGSPFP/${UserObj.getFoto()}" class="rounded-pill" alt=""> 
+                </c:if>
+               <c:if test="${empty UserObj.getFoto()}">
+                   <img src="./imgs/empty.png" class="rounded-pill" alt=""> 
+               </c:if>
             <div>
               <p><c:out value="${pub.getUsuario()}"></c:out></p>
               <span><c:out value="${pub.getFechaAlta()}"></c:out></span>
@@ -183,38 +205,49 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div class="">
-              <form id="signUp">
+              <form id="signUp" action="ChangeUserDataServlet" method="post" enctype="multipart/form-data">
                      <h2>Modificar Datos</h2>
                      <div class="profile-avatar">
-                      <img src="imgs/empty.png" alt="" class="rounded-pill profile-picture">
-                      <h2 class="profile-name"><%= request.getSession().getAttribute("Username")%></h2>
-                      <button class="btn btn-primary">Cambiar foto de perfil</button>
+                      <c:if test="${not empty UserObj.getFoto()}">
+                        <img src="./IMGSPFP/${UserObj.getFoto()}" alt="" class="rounded-pill profile-picture" id="preview"> 
+                      </c:if>
+                      <c:if test="${empty UserObj.getFoto()}">
+                        <img src="./imgs/empty.png" alt="" class="rounded-pill profile-picture" id="preview"> 
+                      </c:if>   
+                      
+                      <h2 class="profile-name">${UserObj.getUsuario()}</h2>
+                      <label for="file-upload" class="btn btn-info">Cambiar foto de perfil.</label>
+                      <input name="file-uploadCU" style="display:none;" id="file-upload" type="file" accept="image/png, image/jpeg" class="btn btn-info boton-input" onchange="previewImage(event)"/>
                      </div>
                      <div class="mb-3">
                          <label for="firstName"  class="form-label">Primer Nombre</label>
-                         <input type="text" value="Fulanita"  class="form-control" id="firstName" placeholder="ej. Maria, Diego" required>
+                         <input type="text" name="firstNameCU" value="${UserObj.getNombre()}"  class="form-control" id="firstName" placeholder="ej. Maria, Diego" required>
                      </div>
                      <div class="mb-3">
                       <label for="secondName"  class="form-label">Segundo Nombre(opcional)</label>
-                      <input type="text"  class="form-control" id="secondName" placeholder="ej. Maria, Diego" optional>
+                      <input type="text" name="secondNameCU" value="${UserObj.getSNombre()}" class="form-control" id="secondName" placeholder="ej. Maria, Diego" optional>
                       </div>
                      <div class="mb-3">
-                         <label for="lastName" class="form-label">Apellidos(s)</label>
-                         <input type="text" value="Perez"   class="form-control" id="lastName" placeholder="ej. Perez, Ramirez" required>
+                         <label for="lastName" class="form-label">Apellido Paterno:</label>
+                         <input type="text" name="lastNameCU" value="${UserObj.getApPaterno()}"   class="form-control" id="lastName" placeholder="ej. Perez, Ramirez" required>
+                     </div>
+                     <div class="mb-3">
+                         <label for="lastName" class="form-label">Apellidos Materno:</label>
+                         <input type="text" name="lastName2CU" value="${UserObj.getApMaterno()}"   class="form-control" id="lastName" placeholder="ej. Perez, Ramirez" required>
                      </div>
                      <div class="mb-3">
                          <label for="usernameSignUp" class="form-label">Nombre de usuario</label>
-                         <input type="text" value="Username"  class="form-control" id="usernameSignUp" placeholder="ej. Perlita23, Manganito98" required>
+                         <input type="text"name="usernameCU" value="${UserObj.getUsuario()}"  class="form-control" id="usernameSignUp" placeholder="ej. Perlita23, Manganito98" required>
                      </div>
                      <div class="mb-3">
                          <label for="birthday" class="form-label">Fecha de nacimiento</label>
-                         <input type="date"  value="1998-01-28" class="form-control" id="birthday" required>
+                         <input type="date" name="birthdayCU" value="${UserObj.getFechaNac()}" class="form-control" id="birthday" required>
                      </div>
                      <div class="mb-3">
                          <label for="email" class="form-label">Correo</label>
-                         <input type="email" value="fulanaP@uwu.com" class="form-control" id="email" placeholder="ejemplo@gmail.com" required>
+                         <input type="email" name="emailCU" value="${UserObj.getCorreo()}" class="form-control" id="email" placeholder="ejemplo@gmail.com" required>
                      </div>
-                     <button type="submit" id="btnRegister" class="btn btn-primary">Editar</button>
+                     <button type="submit" id="btnRegister" class="btn btn-primary">Guardar Cambios</button>
               </form>
           </div>
     
@@ -226,9 +259,21 @@
     <p>Copyright 2024 - K-Connect</p>
     <p>Politicas de privacidad</p>
     <p>Politicas de cookies</p>
-   </div>
+   </div> <script>
+              function previewImage(event) {
+                  var input = event.target;
+                  var reader = new FileReader();
+                  
+                  reader.onload = function(){
+                      var img = document.getElementById('preview');
+                      img.src = reader.result;
+                  };
+                  
+                  reader.readAsDataURL(input.files[0]);
+              }
+          </script>
     </body>
-    
+   
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="script.js"></script>

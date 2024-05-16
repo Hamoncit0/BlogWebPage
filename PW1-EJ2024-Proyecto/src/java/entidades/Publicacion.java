@@ -19,6 +19,8 @@ public class Publicacion {
     private String Categoria;
     private String FechaAlta;
     private int Estatus;
+    private String FotoUsu;
+    
     public Publicacion(){}
 
     public int getIdPublicacion() {
@@ -99,6 +101,14 @@ public class Publicacion {
 
     public void setEstatus(int Estatus) {
         this.Estatus = Estatus;
+    }
+
+    public String getFotoUsu() {
+        return FotoUsu;
+    }
+
+    public void setFotoUsu(String FotoUsu) {
+        this.FotoUsu = FotoUsu;
     }
     
 }

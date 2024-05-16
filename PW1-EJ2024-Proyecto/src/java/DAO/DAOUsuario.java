@@ -51,6 +51,8 @@ public class DAOUsuario {
                 log.setApMaterno(rs.getString("ApMaterno"));
                 log.setCorreo(rs.getString("Correo"));
                 log.setEdad(rs.getInt("Edad"));
+                log.setFoto(rs.getString("Foto"));
+                System.out.println("LA FOTO SE LLAMA:"+log.getFoto());
                 Timestamp timestamp = rs.getTimestamp("FechaNac");
                 LocalDateTime dateTime = timestamp.toLocalDateTime();
                 log.setFechaNac(dateTime.toLocalDate());
@@ -117,11 +119,62 @@ public class DAOUsuario {
             con.close();
             return true;
         }catch(SQLException | ClassNotFoundException e){
-        System.out.println("ERROR EN LOGIN: " + e.getMessage());
+        System.out.println("ERROR EN SIGNUP: " + e.getMessage());
         return false;
         }finally{
              
         }
     }
     
+    public Object updateUser(Object obj){
+     //obj es algun objeto que recibira el metodo y ya nada mas lo pasamos a Usuario
+        usu = (Usuario) obj;
+        
+        //servira para guardar el usuario loggeado y sera el objeto que regresaremos
+        Usuario log = new Usuario(); 
+        
+        //para conectarnos a la base de datos
+        Connection con;
+        PreparedStatement pst;
+        ResultSet rs;
+        String query = "UPDATE tb_usuario SET Usuario=?, Pass=?, Foto=?, FechaNac=?, Nombre=?, SNombre=?, ApPaterno=?, ApMaterno=? WHERE IDUsuario = ?;";
+        System.out.println("LLego despues del query");
+        try{
+            //se conecta
+            Class.forName(db.getDriver());
+            con = DriverManager.getConnection(
+            db.getUrl() + db.getDatabase(),
+            db.getUser(),
+            db.getPass()
+            );
+            //Preparar el query
+            pst = con.prepareStatement(query);
+            pst.setString(1, usu.getUsuario());
+            pst.setString(2, usu.getPass());
+            pst.setString(3, usu.getFoto());
+            pst.setDate(4, Date.valueOf(usu.getFechaNac()));
+            pst.setString(5, usu.getNombre());
+            pst.setString(6, usu.getSNombre());
+            pst.setString(7, usu.getApPaterno());
+            pst.setString(8, usu.getApMaterno());
+            pst.setInt(9, usu.getIdUsuario());
+                System.out.println("Se alcanzo a cocinar el query datos:");
+            //ejecutar el query
+            int rows = pst.executeUpdate();
+            //el result set guarda el asunto
+            if(rows>0){
+            
+                System.out.println("Registro updateado correctamente");
+                log = usu;
+            }
+            con.close();
+            
+        }catch(SQLException | ClassNotFoundException e){
+            System.out.println("ERROR EN UPDATE: " + e.getMessage());
+        
+        }finally{
+            return log;
+        }
+        
+    }
 }

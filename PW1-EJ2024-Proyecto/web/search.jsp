@@ -94,7 +94,7 @@
           <div class="section" id="left">
              <!-- barra de navegacion de la izquierda -->
                 <nav class="nav flex-column nav-izquierda">
-                  <a class="nav-link active" aria-current="page" href="./home.jsp"><i class="bi bi-house-door-fill"></i> Inicio</a>
+                  <a class="nav-link active" aria-current="page" href="GetPostsServlet"><i class="bi bi-house-door-fill"></i> Inicio</a>
                   <a class="nav-link" href="./advanced_search.jsp"><i class="bi bi-compass"></i> Explorar</a>
                   <a class="nav-link" href="GetProfilePostsServlet"><i class="bi bi-person-circle"></i> Perfil</a>
               </nav>

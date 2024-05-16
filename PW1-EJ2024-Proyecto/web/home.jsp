@@ -59,7 +59,13 @@
             </li>
             <li>
               <a class="navbar-brand" href="#">
-                <img src="./imgs/empty.png" alt="Avatar Logo" style="width:40px;" class="rounded-pill" onclick="settingsMenuToggle()"> 
+                  <c:if test="${not empty UserObj.getFoto()}">
+                   <img src="./IMGSPFP/${UserObj.getFoto()}" alt="Avatar Logo" style="width:40px;" class="rounded-pill" onclick="settingsMenuToggle()"> 
+                  </c:if>
+                   <c:if test="${empty UserObj.getFoto()}">
+                   <img src="./imgs/empty.png" alt="Avatar Logo" style="width:40px;" class="rounded-pill" onclick="settingsMenuToggle()"> 
+                  </c:if>
+                
               </a>
             </li>
             <p class="navbar-username"><%out.println(uwu.getUsuario());%></p>
@@ -74,7 +80,12 @@
           <div class="settings-menu-inner">
 
             <div class="user-profile">
-              <img src="imgs/empty.png" class="rounded-pill" alt="">
+                <c:if test="${not empty UserObj.getFoto()}">
+                   <img src="./IMGSPFP/${UserObj.getFoto()}" alt="Avatar Logo"  class="rounded-pill"> 
+                </c:if>
+               <c:if test="${empty UserObj.getFoto()}">
+                   <img src="./imgs/empty.png" alt="Avatar Logo" class="rounded-pill"> 
+               </c:if>
               <div>
                 <p><%out.println(uwu.getUsuario());%></p>
                 <a href="GetProfilePostsServlet">Ver Perfil</a>
@@ -103,7 +114,7 @@
       <div class="section" id="left">
          <!-- barra de navegacion de la izquierda -->
             <nav class="nav flex-column nav-izquierda">
-              <a class="nav-link active" aria-current="page" href="./home.jsp"><i class="bi bi-house-door-fill"></i> Inicio</a>
+              <a class="nav-link active" aria-current="page" href="GetPostsServlet"><i class="bi bi-house-door-fill"></i> Inicio</a>
               <a class="nav-link" href="./advanced_search.jsp"><i class="bi bi-compass"></i> Explorar</a>
               <a class="nav-link" href="GetProfilePostsServlet"><i class="bi bi-person-circle"></i> Perfil</a>
           </nav>
@@ -112,7 +123,12 @@
           <form action="MakeAPostServlet" method="post"  enctype="multipart/form-data">
               <div class="make-a-Post">
           <div class="user-profile">
-            <img src="imgs/empty.png" class="rounded-pill" alt="">
+                <c:if test="${not empty UserObj.getFoto()}">
+                   <img src="./IMGSPFP/${UserObj.getFoto()}" alt="Avatar Logo"  class="rounded-pill"> 
+                </c:if>
+               <c:if test="${empty UserObj.getFoto()}">
+                   <img src="./imgs/empty.png" alt="Avatar Logo" class="rounded-pill"> 
+               </c:if>
             <div>
               <p><%out.println(uwu.getUsuario());%></p>
               <select style="margin-top: 5px;" class="form-select" id="inputGroupSelect01" name="Categoria">
@@ -150,7 +166,12 @@
                  <div class="post-container" value="${pub.getIdPublicacion()}">
           <div class="post-row">
           <div class="user-profile">
-            <img src="imgs/empty.png" class="rounded-pill" alt="">
+              <c:if test="${not empty pub.getFotoUsu()}">
+                   <img src="./IMGSPFP/${pub.getFotoUsu()}" alt="Avatar Logo"  class="rounded-pill"> 
+                </c:if>
+               <c:if test="${empty pub.getFotoUsu()}">
+                   <img src="./imgs/empty.png" alt="Avatar Logo" class="rounded-pill"> 
+               </c:if>
             <div>
               <p><c:out value="${pub.getUsuario()}"></c:out></p>
               <span><c:out value="${pub.getFechaAlta()}"></c:out></span>

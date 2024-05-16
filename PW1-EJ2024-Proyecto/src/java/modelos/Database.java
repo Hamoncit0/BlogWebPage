@@ -13,7 +13,7 @@ public class Database {
        this.database="piapw1";
        this.user="root";
        this.pass="root";
-       this.driver="com.mysql.jdbc.Driver";
+       this.driver="com.mysql.cj.jdbc.Driver";
     }
 
     public String getUrl() {

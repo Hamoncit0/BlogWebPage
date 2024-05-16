@@ -32,7 +32,7 @@ public class DAOPublicacion {
         Connection con;
         PreparedStatement pst;
         ResultSet rs;
-        String query = "SELECT pub.*, cat.Categoria, usu.Usuario FROM tb_publicacion pub JOIN tb_categoria cat ON pub.IDCategoria = cat.IDCategoria JOIN tb_usuario usu ON pub.IDUsuario = usu.IDUsuario WHERE pub.Estatus = 1 ORDER BY FechaAlta DESC LIMIT 15;";
+        String query = "SELECT pub.*, cat.Categoria, usu.Usuario, usu.Foto FROM tb_publicacion pub JOIN tb_categoria cat ON pub.IDCategoria = cat.IDCategoria JOIN tb_usuario usu ON pub.IDUsuario = usu.IDUsuario WHERE pub.Estatus = 1 ORDER BY FechaAlta DESC LIMIT 15;";
         
         try{
           //se conecta
@@ -42,7 +42,7 @@ public class DAOPublicacion {
             db.getUser(),
             db.getPass()
             );
-             //Preparar el query
+            //Preparar el query
             pst = con.prepareStatement(query);
             //ejecutar el query
             rs = pst.executeQuery();
@@ -54,6 +54,7 @@ public class DAOPublicacion {
                 pub.setImagen(rs.getString("Imagen"));
                 pub.setCategoria(rs.getString("Categoria"));
                 pub.setIDUsuario(rs.getInt("IDUsuario"));
+                pub.setFotoUsu(rs.getString("Foto"));
                 //lo recibe en timestamp
                 Timestamp timestamp = rs.getTimestamp("FechaAlta");
                 //lo pasa a DateTime
@@ -186,4 +187,66 @@ public class DAOPublicacion {
         return lista;
         }
 }
+    
+    public List<Publicacion> consultarPorIndex(String index){
+     List<Publicacion> lista = new ArrayList();
+        
+       //para conectarnos a la base de datos
+        Connection con;
+        PreparedStatement pst;
+        ResultSet rs;
+        String query = "SELECT pub.*, cat.Categoria, usu.Usuario, usu.Foto FROM tb_publicacion pub JOIN tb_categoria cat ON pub.IDCategoria = cat.IDCategoria JOIN tb_usuario usu ON pub.IDUsuario = usu.IDUsuario WHERE pub.Estatus = 1 ORDER BY FechaAlta DESC LIMIT ?, 5;";
+        
+        try{
+          //se conecta
+            Class.forName(db.getDriver());
+            con = DriverManager.getConnection(
+            db.getUrl() + db.getDatabase(),
+            db.getUser(),
+            db.getPass()
+            );
+             //Preparar el query
+            pst = con.prepareStatement(query);
+            pst.setString(1, index);
+            //ejecutar el query
+            rs = pst.executeQuery();
+            while(rs.next()){
+                Publicacion pub = new Publicacion();
+                pub.setIdPublicacion(rs.getInt("IDPublicacion"));
+                pub.setTitulo(rs.getString("Titulo"));
+                pub.setContenido(rs.getString("Contenido"));
+                pub.setImagen(rs.getString("Imagen"));
+                pub.setCategoria(rs.getString("Categoria"));
+                pub.setIDUsuario(rs.getInt("IDUsuario"));
+                pub.setFotoUsu(rs.getString("Foto"));
+                //lo recibe en timestamp
+                Timestamp timestamp = rs.getTimestamp("FechaAlta");
+                //lo pasa a DateTime
+                LocalDateTime dateTime = timestamp.toLocalDateTime();
+                //le da el formato
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d 'de' MMMM 'de' yyyy h:mma", new Locale("es", "ES"));
+                //lo guarda en un string
+                String formattedDateTime = dateTime.format(formatter);
+                pub.setFechaAlta(formattedDateTime);
+                
+                pub.setUsuario(rs.getString("Usuario"));
+                lista.add(pub);
+            }
+        }
+        catch(SQLException | ClassNotFoundException e){
+        System.out.println("ERROR EN LOGIN: " + e.getMessage());
+        
+        }
+        finally{
+        return lista;
+        }
+        
+        
+    }
+    
+    public int getTotalPublicaciones(){
+    
+    return 0;
+    
+    }
 }
