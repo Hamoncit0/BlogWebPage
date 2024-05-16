@@ -54,6 +54,7 @@ public class DAOPublicacion {
                 pub.setImagen(rs.getString("Imagen"));
                 pub.setCategoria(rs.getString("Categoria"));
                 pub.setIDUsuario(rs.getInt("IDUsuario"));
+                pub.setIDCategoria(rs.getInt("IDCategoria"));
                 pub.setFotoUsu(rs.getString("Foto"));
                 //lo recibe en timestamp
                 Timestamp timestamp = rs.getTimestamp("FechaAlta");

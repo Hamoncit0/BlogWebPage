@@ -151,8 +151,7 @@
             
            <label for="file-upload"><a style="color: #6610F2">Agregar una foto <i class="bi bi-image-fill"></i></a></label>
             <input value="Elegir foto." name="file-upload" id="file-upload" type="file" accept="image/png, image/jpeg" class="btn btn-info boton-input" onchange="previewImage(event)"/>
-           <!--<label for="file-upload" class="btn btn-info">Elegir una foto</label>
-                            <input style="display:none;" name="file-upload" id="file-upload" type="file" accept="image/png, image/jpeg" class="btn btn-info boton-input" onchange="previewImage(event)"/>-->
+           
             <button type="submit" class="btn btn-primary btn-sm">Publicar</button>
           </div>
         </div>
@@ -188,7 +187,13 @@
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Eliminar publicacion</a></li>
-              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal1">Modificar publicacion</a></li>
+              <li><a class="dropdown-item modify" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal1"
+              data-username="${pub.getUsuario()}" data-id="${pub.getIdPublicacion()}"
+              data-title="${pub.getTitulo()}"
+              data-content="${pub.getContenido()}"
+              data-image="IMGSPFP/${pub.getImagen()}"
+              data-category-id="${pub.getIDCategoria()}"
+              data-user-image="IMGSPFP/${pub.getFotoUsu()}">Modificar publicacion</a></li>
             </ul>
           </div>
           </c:if>
@@ -261,18 +266,26 @@
         <div class="make-a-Post">
           <div class="make-a-Post">
             <div class="user-profile">
-              <img src="imgs/empty.png" class="rounded-pill" alt="">
+              <img src="imgs/empty.png" class="rounded-pill" alt="" id="modal-postUserPfp">
               <div>
-                <p>Username</p>
-                <small>Categoría <i class="bi bi-caret-down-fill"></i></small>
+                  <span id="modal-postId" type="hidden"></span>
+                <p id="modal-postUsername">Username</p>
+                <select style="margin-top: 5px;" class="form-select" id="modal-postCategory" name="Categoria">
+                <option selected>Categoria</option>
+                <c:forEach items="${Categorias}" var="cat">
+                    <option value="${cat.getIDCategoria()}"><c:out value="${cat.getCategoria()}"></c:out></option>
+                </c:forEach>
+              </select>
               </div>
             </div>
             
             <div class="input-container form-floating">
-              <input type="text" name="" id="" class="input-titulo" placeholder="Titulo">
-              <textarea rows="3" placeholder="Contenido" id="floatingTextarea2" style="height: 100px" ></textarea>
+              <input type="text" name="" id="modal-postTitle" class="input-titulo" placeholder="Titulo">
+              <textarea rows="3" placeholder="Contenido" id="modal-postContent"" style="height: 100px" ></textarea>
+              <img src="" style="max-height: 300px; max-width: 300px;" alt="" class="" id="previewModal">
               <div class="add-to-post">
-              <a href="#">Agregar una foto <i class="bi bi-image-fill"></i></a>
+              <label for="modal-file-upload"><a style="color: #6610F2">Agregar una foto <i class="bi bi-image-fill"></i></a></label>
+            <input value="Elegir foto." name="file-upload" id="modal-file-upload" type="file" accept="image/png, image/jpeg" class="btn btn-info boton-input" onchange="previewImageModal(event)"/>
             </div>
           </div>
   
@@ -288,6 +301,22 @@
   </div>
  </div>
     </body>
+      <script>
+        
+          function previewImageModal(event) {
+            var input = event.target;
+            var reader = new FileReader();
+
+            reader.onload = function() {
+                var img = document.getElementById('previewModal');
+                img.src = reader.result;
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+
+        
+    </script>
     <script>
      function previewImage(event) {
             var input = event.target;
@@ -300,6 +329,48 @@
             
             reader.readAsDataURL(input.files[0]);
         }
+  
+    </script>
+    <script>
+        
+         // Nueva función para llenar el modal con los datos de la publicación
+  function loadPostDataToModal(post) {
+      
+    document.getElementById('modal-postId').value = post.id;
+    document.getElementById('modal-postUsername').textContent = post.username;
+    document.getElementById('modal-postTitle').value = post.title;
+    document.getElementById('modal-postContent').value = post.content;
+    document.getElementById('previewModal').src = post.image;
+    // Seleccionar la categoría en el select
+    let categorySelect = document.getElementById('modal-postCategory');
+    for (let i = 0; i < categorySelect.options.length; i++) {
+      if (categorySelect.options[i].value == post.categoryId) {
+        categorySelect.selectedIndex = i;
+        break;
+      }
+    }
+
+    // Cambiar la imagen del usuario en el modal
+    document.getElementById('modal-postUserPfp').src = post.userImage;
+  }
+
+  // Asocia la función a los botones de "Modificar publicación"
+ // Asocia la función a los botones de "Modificar publicación"
+  document.querySelectorAll('.dropdown-item.modify').forEach(button => {
+    button.addEventListener('click', function() {
+      // Simula obtener los datos de la publicación (esto se haría realmente mediante una solicitud AJAX o similar)
+      let post = {
+        id: this.dataset.id,
+        username: this.dataset.username,
+        title: this.dataset.title,
+        content: this.dataset.content,
+        image: this.dataset.image,
+        categoryId: this.dataset.categoryId,
+        userImage: this.dataset.userImage
+      };
+      loadPostDataToModal(post);
+    });
+  });
     </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

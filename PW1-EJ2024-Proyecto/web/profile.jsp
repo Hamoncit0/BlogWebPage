@@ -162,8 +162,8 @@
               <i class="bi bi-three-dots-vertical"></i>
             </button>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Eliminar publicacion</a></li>
-              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal1">Modificar publicacion</a></li>
+              <li><a data-id="${pub.getIDPublicacion()}" class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal">Eliminar publicacion</a></li>
+              <li><a data-id="${pub.getIDPublicacion()}" class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modifyModal">Modificar publicacion</a></li>
             </ul>
           </div>
           </c:if>
