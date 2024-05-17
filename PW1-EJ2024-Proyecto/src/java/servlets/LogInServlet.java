@@ -68,7 +68,6 @@ public class LogInServlet extends HttpServlet {
                 pantalla = "home.jsp";
                 request.setAttribute("Usuario", usu);
                 request.setAttribute("error", 0);
-                
                 //publicaciones
                 //JTSL es una libreria para manejar objetos :)
             }

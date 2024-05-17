@@ -52,8 +52,8 @@
           </ul>
           <ul class="navbar-nav justify-contend-end">
             <li>
-              <form class="d-flex" action="search.jsp" method="get" >
-                <input class="form-control me-2" type="text" placeholder="Buscar">
+              <form class="d-flex" action="SearchServlet" method="post" >
+                <input name="palabraBuscador" class="form-control me-2" type="text" placeholder="Buscar">
                 <button class="btn btn-primary" type="submit" >Buscar</button>
               </form>
             </li>
@@ -136,9 +136,6 @@
                 <c:forEach items="${Categorias}" var="cat">
                     <option value="${cat.getIDCategoria()}"><c:out value="${cat.getCategoria()}"></c:out></option>
                 </c:forEach>
-                <!--<option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>-->
               </select>
             </div>
           </div>
@@ -160,7 +157,8 @@
               
               
           </form>
-        
+              <div class="publicaciones" id="rowPublicaciones">
+                
               <c:forEach items="${Recientes}" var="pub">
                  <div class="post-container" value="${pub.getIdPublicacion()}">
           <div class="post-row">
@@ -186,7 +184,7 @@
               <i class="bi bi-three-dots-vertical"></i>
             </button>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Eliminar publicacion</a></li>
+              <li><a class="dropdown-item delete" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="${pub.getIdPublicacion()}">Eliminar publicacion</a></li>
               <li><a class="dropdown-item modify" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal1"
               data-username="${pub.getUsuario()}" data-id="${pub.getIdPublicacion()}"
               data-title="${pub.getTitulo()}"
@@ -207,9 +205,18 @@
           </c:if>
           
          </div>
-              </c:forEach>
-         
-         <button class="load-button btn btn-light">Cargar mas</button>
+              </c:forEach>  
+              </div>
+              <button class="btn btn-outline-primary btn-sm" id="btnVerTodas" onclick="getPublicaciones(0)">Ver todas</button>
+         <nav aria-label="Page navigation example" >
+            <ul class="pagination" id="paginador">
+              <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
+            </ul>
+          </nav>
       </div>
       <div class="section" id="right">
         <div class="categorias-populares">
@@ -243,13 +250,16 @@
         <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar publicación</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <form action="DeletePostServlet" method="post">
       <div class="modal-body">
         ¿Estas seguro de que quieres eliminar esta publicación?
+        <input name="IDPublicacion" type="hidden" id="deleteModalPostId">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-        <button type="button" class="btn btn-primary">Si</button>
+        <button type="Submit" class="btn btn-primary">Si</button>
       </div>
+      </form>
     </div>
   </div>
 </div>
@@ -263,14 +273,15 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" >
+       <form action="ChangePostServlet" method="post" enctype="multipart/form-data">
         <div class="make-a-Post">
           <div class="make-a-Post">
             <div class="user-profile">
               <img src="imgs/empty.png" class="rounded-pill" alt="" id="modal-postUserPfp">
               <div>
-                  <span id="modal-postId" type="hidden"></span>
+                <input name="ModalID" id="modal-postId" type="hidden"/>
                 <p id="modal-postUsername">Username</p>
-                <select style="margin-top: 5px;" class="form-select" id="modal-postCategory" name="Categoria">
+                <select style="margin-top: 5px;" class="form-select" id="modal-postCategory" name="ModalCategoria">
                 <option selected>Categoria</option>
                 <c:forEach items="${Categorias}" var="cat">
                     <option value="${cat.getIDCategoria()}"><c:out value="${cat.getCategoria()}"></c:out></option>
@@ -280,12 +291,12 @@
             </div>
             
             <div class="input-container form-floating">
-              <input type="text" name="" id="modal-postTitle" class="input-titulo" placeholder="Titulo">
-              <textarea rows="3" placeholder="Contenido" id="modal-postContent"" style="height: 100px" ></textarea>
+              <input type="text" name="ModalTitulo" id="modal-postTitle" class="input-titulo" placeholder="Titulo">
+              <textarea name="ModalContenido" rows="3" placeholder="Contenido" id="modal-postContent"" style="height: 100px" ></textarea>
               <img src="" style="max-height: 300px; max-width: 300px;" alt="" class="" id="previewModal">
               <div class="add-to-post">
               <label for="modal-file-upload"><a style="color: #6610F2">Agregar una foto <i class="bi bi-image-fill"></i></a></label>
-            <input value="Elegir foto." name="file-upload" id="modal-file-upload" type="file" accept="image/png, image/jpeg" class="btn btn-info boton-input" onchange="previewImageModal(event)"/>
+            <input value="Elegir foto." name="Modalfile-upload" id="modal-file-upload" type="file" accept="image/png, image/jpeg" class="btn btn-info boton-input" onchange="previewImageModal(event)"/>
             </div>
           </div>
   
@@ -294,8 +305,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Modificar</button>
+        <button type="submit" class="btn btn-primary">Modificar</button>
       </div>
+        </form>
     </div>
   </div>
   </div>
@@ -372,6 +384,21 @@
     });
   });
     </script>
+    <script>
+        document.querySelectorAll('.dropdown-item.delete').forEach(button => {
+    button.addEventListener('click', function() {
+        // Retrieve the ID from the data-id attribute
+        let postId = this.dataset.id;
+        
+        // Set the ID to a hidden input in the modal or any other element
+        document.getElementById('deleteModalPostId').value = postId;
+
+       
+    });
+});
+    </script>
+    
+    
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="script.js"></script>

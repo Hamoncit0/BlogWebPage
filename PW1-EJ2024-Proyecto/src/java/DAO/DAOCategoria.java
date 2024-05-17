@@ -64,7 +64,7 @@ public class DAOCategoria {
         Connection con;
         PreparedStatement pst;
         ResultSet rs;
-        String query = "SELECT ROW_NUMBER() OVER (ORDER BY COUNT(pub.IDPublicacion) DESC) AS Lugar, cat.Categoria, COUNT(pub.IDPublicacion) AS Cantidad FROM tb_categoria cat INNER JOIN tb_publicacion pub ON cat.IDCategoria = pub.IDCategoria GROUP BY cat.categoria ORDER BY Cantidad DESC LIMIT 5;";
+        String query = "SELECT ROW_NUMBER() OVER (ORDER BY COUNT(pub.IDPublicacion) DESC) AS Lugar, cat.Categoria, COUNT(pub.IDPublicacion) AS Cantidad FROM tb_categoria cat INNER JOIN tb_publicacion pub ON cat.IDCategoria = pub.IDCategoria WHERE pub.Estatus = 1 GROUP BY cat.categoria ORDER BY Cantidad DESC LIMIT 5;";
         try{
           //se conecta
             Class.forName(db.getDriver());

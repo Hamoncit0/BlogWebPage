@@ -6,6 +6,11 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="entidades.Usuario"%>
+<%@page import="entidades.Categoria"%>
+<%@page import="DAO.DAOPublicacion"%>
+<%--@taglib prefix="c" uri="jakarta.tag.core"--%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -100,126 +105,57 @@
               </nav>
           </div>
           <div class="section-middle" id="middle">
-            <p class="search-title">Buscaste: <span>Sanrio</span></p>
-             <!-- Post #1 -->
-             <div class="post-container">
-              <div class="post-row">
-              <div class="user-profile">
-                <img src="imgs/empty.png" class="rounded-pill" alt="">
-                <div>
-                  <p>Username</p>
-                  <span>27 de Febrero de 2024 19:09 pm</span>
-                  <br>
-                  <span>Categoria: Sanrio</span>
-                </div>
-              </div>
-              
-              <div class="dropstart">
-                <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  
-                  <i class="bi bi-three-dots-vertical"></i>
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Eliminar publicacion</a></li>
-                  <li><a class="dropdown-item" href="#">Modificar publicacion</a></li>
-                </ul>
-              </div>
-              </div>
-              <h6 class="post-title">Titulo bonito</h6>
-              <p class="post-text">Texto bonito uwu  </p>
-              <img src="imgs/image-feed.png" alt="" class="post-image">
-              
-             </div>
+              <p class="search-title">Buscaste: <span><c:out value="${busquedaWord}"></c:out></span></p>
              
-             <!-- Post #2 -->
-             <div class="post-container">
-              <div class="post-row">
-              <div class="user-profile">
-                <img src="imgs/empty.png" class="rounded-pill" alt="">
-                <div>
-                  <p>Username</p>
-                  <span>27 de Febrero de 2024 19:09 pm</span>
-                  <br>
-                  <span>Categoria: Sanrio</span>
-                </div>
-              </div>
+              <div class="publicaciones">
+                 <c:forEach items="${busquedaPub}" var="pub">
+                 <div class="post-container" value="${pub.getIdPublicacion()}">
+          <div class="post-row">
+          <div class="user-profile">
+              <c:if test="${not empty pub.getFotoUsu()}">
+                   <img src="./IMGSPFP/${pub.getFotoUsu()}" alt="Avatar Logo"  class="rounded-pill"> 
+                </c:if>
+               <c:if test="${empty pub.getFotoUsu()}">
+                   <img src="./imgs/empty.png" alt="Avatar Logo" class="rounded-pill"> 
+               </c:if>
+            <div>
+              <p><c:out value="${pub.getUsuario()}"></c:out></p>
+              <span><c:out value="${pub.getFechaAlta()}"></c:out></span>
+              <br>
+              <span>Categoria: <c:out value="${pub.getCategoria()}"></c:out></span>
+            </div>
+          </div>
               
-              <div class="dropstart">
-                <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  
-                  <i class="bi bi-three-dots-vertical"></i>
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Eliminar publicacion</a></li>
-                  <li><a class="dropdown-item" href="#">Modificar publicacion</a></li>
-                </ul>
-              </div>
-              </div>
+          <c:if test="${pub.getIDUsuario()== UserObj.getIdUsuario()}">
+          <div class="dropstart">
+            <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               
-              <h6 class="post-title">Titulo bonito</h6>
-              <p class="post-text">Texto bonito uwu  </p>
-              <img src="imgs/download.png" alt="" class="post-image">
+              <i class="bi bi-three-dots-vertical"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item delete" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="${pub.getIdPublicacion()}">Eliminar publicacion</a></li>
+              <li><a class="dropdown-item modify" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal1"
+              data-username="${pub.getUsuario()}" data-id="${pub.getIdPublicacion()}"
+              data-title="${pub.getTitulo()}"
+              data-content="${pub.getContenido()}"
+              data-image="IMGSPFP/${pub.getImagen()}"
+              data-category-id="${pub.getIDCategoria()}"
+              data-user-image="IMGSPFP/${pub.getFotoUsu()}">Modificar publicacion</a></li>
+            </ul>
+          </div>
+          </c:if>
+            
+          </div>
+          <h6 class="post-title"><c:out value="${pub.getTitulo()}"></c:out></h6>
+          <p class="post-text"><c:out value="${pub.getContenido()}"></c:out> </p>
+          <c:if test="${not empty pub.getImagen()}">
+          <img src="IMGSPFP/${pub.getImagen()}" alt="" class="post-image">
               
-             </div>
-             <!-- Post #3 -->
-             <div class="post-container">
-              <div class="post-row">
-              <div class="user-profile">
-                <img src="imgs/empty.png" class="rounded-pill" alt="">
-                <div>
-                  <p>Username</p>
-                  <span>27 de Febrero de 2024 19:09 pm</span>
-                  <br>
-                  <span>Categoria: Sanrio</span>
-                </div>
-              </div>
-              
-              <div class="dropstart">
-                <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  
-                  <i class="bi bi-three-dots-vertical"></i>
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Eliminar publicacion</a></li>
-                  <li><a class="dropdown-item" href="#">Modificar publicacion</a></li>
-                </ul>
-              </div>
-              </div>
-              
-              <h6 class="post-title">Titulo bonito</h6>
-              <p class="post-text">Texto bonito uwu  </p>
-              <img src="imgs/image-feed1.png" alt="" class="post-image">
-             </div>
-              <!-- Post #4 -->
-            <div class="post-container">
-                <div class="post-row">
-                <div class="user-profile">
-                  <img src="imgs/empty.png" class="rounded-pill" alt="">
-                  <div>
-                    <p>Username</p>
-                    <span>27 de Febrero de 2024 19:09 pm</span>
-                    <br>
-                  <span>Categoria: Sanrio</span>
-                  </div>
-                </div>
-                
-              <div class="dropstart">
-                <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  
-                  <i class="bi bi-three-dots-vertical"></i>
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Eliminar publicacion</a></li>
-                  <li><a class="dropdown-item" href="#">Modificar publicacion</a></li>
-                </ul>
-              </div>
-                </div>
-                
-              <h6 class="post-title">Titulo bonito</h6>
-                <p class="post-text">Texto bonito uwu </p>
-                
-              </div>
-             <button class="load-button btn btn-light">Cargar mas</button>
+          </c:if>
+          
+         </div>
+                 </c:forEach>
+            </div>
           </div>
           <div class="section" id="right">
             <div class="categorias-populares">
