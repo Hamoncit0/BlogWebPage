@@ -119,6 +119,29 @@ function getPublicaciones(index) {
 
                 $("#rowPublicaciones").append(postContainer);
             }
+            
+            // Asocia la función a los botones de "Modificar publicación" dentro de la llamada AJAX
+            document.querySelectorAll('.dropdown-item.modify').forEach(button => {
+                button.addEventListener('click', function() {
+                    let post = {
+                        id: this.dataset.id,
+                        username: this.dataset.username,
+                        title: this.dataset.title,
+                        content: this.dataset.content,
+                        image: this.dataset.image,
+                        categoryId: this.dataset.categoryId,
+                        userImage: this.dataset.userImage
+                    };
+                    loadPostDataToModal(post);
+                });
+            });
+
+            document.querySelectorAll('.dropdown-item.delete').forEach(button => {
+                button.addEventListener('click', function() {
+                    let postId = this.dataset.id;
+                    document.getElementById('deleteModalPostId').value = postId;
+                });
+            });
             getPaginadorClicks();
         },
         error: function(err) {

@@ -137,10 +137,6 @@
                 <p>Edad: <%out.println(uwu.getEdad());%>  </p>
                 <p>Fecha de nacimiento: <%out.println(uwu.getFechaNacStr());%>  </p>
             </div>
-            <div class="profile-menu btn-group">
-                <button type="button" class="btn btn-outline-primary">Publicaciones</button>
-                <button type="button" class="btn btn-outline-primary">Fotos</button>
-            </div>
         </div>
          <c:forEach items="${tusPosts}" var="pub">
                  <div class="post-container" value="${pub.getIdPublicacion()}">
