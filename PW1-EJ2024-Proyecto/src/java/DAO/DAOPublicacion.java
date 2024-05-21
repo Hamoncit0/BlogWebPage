@@ -196,7 +196,7 @@ public class DAOPublicacion {
         Connection con;
         PreparedStatement pst;
         ResultSet rs;
-        String query = "SELECT pub.*, cat.Categoria, usu.Usuario, usu.Foto FROM tb_publicacion pub JOIN tb_categoria cat ON pub.IDCategoria = cat.IDCategoria JOIN tb_usuario usu ON pub.IDUsuario = usu.IDUsuario WHERE pub.Estatus = 1 ORDER BY FechaAlta DESC LIMIT "+index+", "+cantidad+";";
+        String query = "SELECT pub.*, cat.Categoria, cat.IDCategoria, usu.Usuario, usu.Foto FROM tb_publicacion pub JOIN tb_categoria cat ON pub.IDCategoria = cat.IDCategoria JOIN tb_usuario usu ON pub.IDUsuario = usu.IDUsuario WHERE pub.Estatus = 1 ORDER BY FechaAlta DESC LIMIT "+index+", "+cantidad+";";
         
         try{
           //se conecta
@@ -217,6 +217,7 @@ public class DAOPublicacion {
                 pub.setContenido(rs.getString("Contenido"));
                 pub.setImagen(rs.getString("Imagen"));
                 pub.setCategoria(rs.getString("Categoria"));
+                pub.setIDCategoria(rs.getInt("IDCategoria"));
                 pub.setIDUsuario(rs.getInt("IDUsuario"));
                 pub.setFotoUsu(rs.getString("Foto"));
                 //lo recibe en timestamp

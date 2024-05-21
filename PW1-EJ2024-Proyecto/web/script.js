@@ -11,58 +11,56 @@ var cantPublicaciones = 4;
 function limpiarDashboard(){
     $("#rowPublicaciones").empty();
 }
-
-function getPublicaciones(index){
+function getPublicaciones(index) {
     console.log("GET PUBLICACIONES CON INDEX");
     $.ajax({
-        url: "PublicacionServlet?index="+index
-        , type: "GET"
-        , dataType: "JSON"
-        , success: function(data){
-            console.log("data: "+ data);
+        url: "PublicacionServlet?index=" + index,
+        type: "GET",
+        dataType: "JSON",
+        success: function(data) {
+            console.log("data: " + data);
 
-            //PAGINADOR
+            // PAGINADOR
             limpiarDashboard();
             $("#paginador").empty();
-            
+
             var claseAnt = "";
-            if(pagActual == 1) claseAnt = "disabled"
-            //sirve para crear botones del paginador
+            if (pagActual == 1) claseAnt = "disabled";
+            // Sirve para crear botones del paginador
             $("#paginador").append(
                 $("<li>").addClass("page-item").addClass(claseAnt).append(
-                    $("<a>").addClass("page-link").text("Anterior")
+                    $("<a>").addClass("page-link").attr("href", "#").text("Anterior")
                 )
             );
 
-            //para los botones de numeros
+            // Para los botones de números
             const totalPublicaciones = data[0].TotalPublicaciones;
-            const numPaginas = Math.ceil(totalPublicaciones/cantPublicaciones);
+            const numPaginas = Math.ceil(totalPublicaciones / cantPublicaciones);
 
-            for(var i=0; i<numPaginas; i++){
+            for (var i = 0; i < numPaginas; i++) {
                 var claseActual = '';
-                if(pagActual== i+1) claseActual = "active"
-                //sirve para crear botones del paginador
+                if (pagActual == i + 1) claseActual = "active";
+                // Sirve para crear botones del paginador
                 $("#paginador").append(
                     $("<li>").addClass("page-item").addClass(claseActual).append(
-                        $("<a>").addClass("page-link").text(i+1)
+                        $("<a>").addClass("page-link").attr("href", "#").text(i + 1)
                     )
                 );
-
             }
 
             var claseSig = "";
-            if(pagActual == numPaginas) claseSig = "disabled"
-            //sirve para crear botones del paginador
+            if (pagActual == numPaginas) claseSig = "disabled";
+            // Sirve para crear botones del paginador
             $("#paginador").append(
                 $("<li>").addClass("page-item").addClass(claseSig).append(
-                    $("<a>").addClass("page-link").text("Siguiente")
+                    $("<a>").addClass("page-link").attr("href", "#").text("Siguiente")
                 )
             );
-            
+
             var UsuarioUnicoChido = $("#NombreUsuScriptUnico").data("usuario");
             // ROW PUBLICACIONES
             for (var i = 0; i < Object.keys(data).length; i++) {
-                
+
                 var FOTOUSUARIO = data[i].FotoUsu;
                 if (FOTOUSUARIO == null) {
                     FOTOUSUARIO = "imgs/empty.png";
@@ -122,35 +120,30 @@ function getPublicaciones(index){
                 $("#rowPublicaciones").append(postContainer);
             }
             getPaginadorClicks();
-
+        },
+        error: function(err) {
+            console.log("ERR: " + err);
         }
-        , error: function(err){
-            console.log("ERR: "+ err);
-        }
-    })
+    });
 }
-function getPaginadorClicks(){
-    $(".page-item").on("click", function(){
+
+function getPaginadorClicks() {
+    $(".page-item").on("click", function() {
         var item = $(this).text();
+        var nuevoIndice = pagActual;
 
-        if(!$(this).hasClass("disabled")){
-
-
-            if(item == "Siguiente"){
-                item = pagActual + 1;
-                console.log("pagActual en paginador clicks:" + pagActual);
+        if (!$(this).hasClass("disabled")) {
+            if (item == "Siguiente") {
+                nuevoIndice = pagActual + 1;
+            } else if (item == "Anterior") {
+                nuevoIndice = pagActual - 1;
+            } else {
+                nuevoIndice = parseInt(item);
             }
-            else if(item == "Anterior"){
-                item = pagActual - 1;
-                console.log("pagActual en paginador clicks:" + pagActual);
-            }else{
-                console.log("pagActual en paginador clicks:" + pagActual);
-            }
-            pagActual = item;
 
-            var indice = 0;
-            
-            indice = (pagActual * cantPublicaciones) - cantPublicaciones;
+            pagActual = nuevoIndice;
+
+            var indice = (pagActual * cantPublicaciones) - cantPublicaciones;
             
             limpiarDashboard();
             getPublicaciones(indice);
