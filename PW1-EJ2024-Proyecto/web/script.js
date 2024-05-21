@@ -2,108 +2,7 @@ var settingsMenu= document.querySelector(".settings-menu");
 function settingsMenuToggle(){
     settingsMenu.classList.toggle("settings-menu-height");
 }
-/*document.addEventListener('DOMContentLoaded', function () {
-    // Function to get post data based on post ID
-    function getPostData(postId) {
-        var postContainer = document.querySelector('.post-container[data-id="' + postId + '"]');
-        return {
-            title: postContainer.querySelector('.post-title').textContent,
-            content: postContainer.querySelector('.post-text').textContent
-        };
-    }
 
-    // Modify modal event listener
-    var modifyModal = document.getElementById('modifyModal');
-    modifyModal.addEventListener('show.bs.modal', function (event) {
-        var button = event.relatedTarget;  // Button that triggered the modal
-        var postId = button.getAttribute('data-id');  // Extract post ID from data-id attribute
-
-        // Get post data
-        var postData = getPostData(postId);
-
-        // Update modal content
-        modifyModal.querySelector('#modifyPostId').value = postId;
-        modifyModal.querySelector('#modifyPostTitle').value = postData.title;
-        modifyModal.querySelector('#modifyPostContent').value = postData.content;
-    });
-
-    // Delete modal event listener
-    var deleteModal = document.getElementById('deleteModal');
-    deleteModal.addEventListener('show.bs.modal', function (event) {
-        var button = event.relatedTarget;  // Button that triggered the modal
-        var postId = button.getAttribute('data-id');  // Extract post ID from data-id attribute
-
-        // Update modal content
-        deleteModal.querySelector('#deletePostId').value = postId;
-    });
-});*/
-
-/*function getPublicaciones(index){
-            console.log("GET PUBLICACIONES CON INDEX");
-            $.ajax({
-                url:"PublicacionServlet" + index
-                , type: "GET"
-                , dataType: "JSON"
-                , success:function(data){
-                    console.log("data", data);
-                    //PAGINADOR
-                    ${"#paginador"}.empty();
-                    //PONER BOTONES  
-                     ${"#paginador"}.append(
-                                ${"<li>"}.addClass("page-item").append(
-                                 ${"<li>"}.addClass("page-link").text("Antes")
-                                             )
-                    );
-            
-                    const totalPublicaciones = data[0].TotalPublicaciones;
-                    const numPaginas = Math.ceil(totalPublicaciones/ cantPublicaciones);
-                    for(var i = 0; i<numPaginas; i++){
-                        var ClaseActual = '';
-                        if(pagActual = ClaseActual){
-                            
-                            
-                        }
-                         ${"#paginador"}.append(
-                                ${"<li>"}.addClass("page-item").append(
-                                 ${"<li>"}.addClass("page-link").text(i+1)
-                                             )
-                         );
-                    }
-                    ${"#paginador"}.append(
-                                ${"<li>"}.addClass("page-item").append(
-                                 ${"<li>"}.addClass("page-link").text("Siguiente")
-                                             )
-                    );
-            //row publicaciones
-            for(i = 0; i<Object.keys(data).length; i++){
-                
-            }
-            
-                }
-                , error:function(err){
-                    console.log("data", err);
-                }
-            });
-        }
-        
-        function getPaginadorClicks(){
-            ${".page-items"}.on("click", function(){
-                    var item = ${this}.text();
-                    if(item == "siguiente"){
-                        item = pagActual+1;
-                    }
-                    else if(item == "anterior"){
-                        item = pagActual-1;
-                    }
-                    pagActual = item;
-                        
-                    
-                    var index = (pagActual*cantPublicaciones - cantPublicaciones);
-                    limpiarDashboard(); 
-                    getPublicaciones(index);
-            })
-        }
-*/
 var boolBqAvanzada = false;
 var editarPerfil = false;
 var pagActual = 1;
@@ -159,40 +58,68 @@ function getPublicaciones(index){
                     $("<a>").addClass("page-link").text("Siguiente")
                 )
             );
+            
+            var UsuarioUnicoChido = $("#NombreUsuScriptUnico").data("usuario");
+            // ROW PUBLICACIONES
+            for (var i = 0; i < Object.keys(data).length; i++) {
+                
+                var FOTOUSUARIO = data[i].FotoUsu;
+                if (FOTOUSUARIO == null) {
+                    FOTOUSUARIO = "imgs/empty.png";
+                } else {
+                    FOTOUSUARIO = "./IMGSPFP/" + FOTOUSUARIO;
+                }
 
+                var ImagenPublicacion = data[i].Imagen;
+                var imagen = null;
+                if (ImagenPublicacion != null && ImagenPublicacion.trim() !== "") {
+                    imagen = $("<img>").addClass("post-image").attr("src", "./IMGSPFP/" + ImagenPublicacion);
+                }
 
-            //ROW PUBLICACIONES
-            for(var i=0; i<Object.keys(data).length; i++){
-                //esta es la plantilla del post :(
-                $("#rowPublicaciones").append(
-                    $("<div>").addClass("post-container").attr("value", data[i].IdPublicacion).append(
-                        $("<div>").addClass("post-row").append(
-                            $("<div>").addClass("user-profile").append(
-                                $("<img>").addClass("rounded-pill").attr("src", "./IMGSPFP/" + data[i].FotoUsu),
-                                $("<div>").append(
-                                    $("<p>").text(data[i].Usuario),
-                                    $("<span>").text(data[i].FechaAlta),
-                                    $("<br>"),
-                                    $("<span>").text("Categoría:" + data[i].Categoria)
-                                )
-                            ),
-                            $("<div>").addClass("dropstart").append(
-                                $("<button>").addClass("btn").addClass("btn-sm").addClass("btn-light").attr("type", "button").attr("data-bs-toggle", "dropdown").append(
-                                    $("<i>").addClass("bi").addClass("bi-three-dots-vertical")
-                                ),
-                                $("<ul>").addClass("dropdown-menu").append(
-                                    $("<li>").append( $("<a>").addClass("dropdown-item").addClass("delete").attr("data-bs-toggle", "modal").attr("data-bs-target", "#exampleModal").attr("data-id", data[i].IdPublicacion).text("Eliminar publicacion.")),
-                                    
-                                    $("<li>").append( $("<a>").addClass("dropdown-item").addClass("modify").attr("data-bs-toggle", "modal").attr("data-bs-target", "#exampleModal1").attr("data-id", data[i].IdPublicacion).attr("data-username", data[i].Usuario).attr("data-title", data[i].Titulo).attr("data-content", data[i].Contenido).attr("data-image", data[i].Imagen).attr("data-category-id", data[i].IDCategoria).attr("data-user-image", data[i].FotoUsu).text("Modificar publicacion."))
-                                )
+                // Esta es la plantilla del post :(
+                var postContainer = $("<div>").addClass("post-container").attr("value", data[i].IdPublicacion).append(
+                    $("<div>").addClass("post-row").append(
+                        $("<div>").addClass("user-profile").append(
+                            $("<img>").addClass("rounded-pill").attr("src", FOTOUSUARIO),
+                            $("<div>").append(
+                                $("<p>").text(data[i].Usuario),
+                                $("<span>").text(data[i].FechaAlta),
+                                $("<br>"),
+                                $("<span>").text("Categoría: " + data[i].Categoria)
                             )
-                        ),
-                        $("<h6>").addClass("post-title").text(data[i].Titulo),
-                        $("<p>").addClass("post-text").text(data[i].Contenido),
-                        $("<img>").addClass("post-image").attr("src", "./IMGSPFP/" + data[i].Imagen)
-                        
+                        )
                     )
                 );
+
+                // Condición para mostrar el dropstart solo si el usuario coincide
+                if (data[i].Usuario == UsuarioUnicoChido) {
+                    postContainer.find(".post-row").append(
+                        $("<div>").addClass("dropstart").append(
+                            $("<button>").addClass("btn btn-sm btn-light").attr("type", "button").attr("data-bs-toggle", "dropdown").append(
+                                $("<i>").addClass("bi bi-three-dots-vertical")
+                            ),
+                            $("<ul>").addClass("dropdown-menu").append(
+                                $("<li>").append(
+                                    $("<a>").addClass("dropdown-item delete").attr("data-bs-toggle", "modal").attr("data-bs-target", "#exampleModal").attr("data-id", data[i].IdPublicacion).text("Eliminar publicacion.")
+                                ),
+                                $("<li>").append(
+                                    $("<a>").addClass("dropdown-item modify").attr("data-bs-toggle", "modal").attr("data-bs-target", "#exampleModal1").attr("data-id", data[i].IdPublicacion).attr("data-username", data[i].Usuario).attr("data-title", data[i].Titulo).attr("data-content", data[i].Contenido).attr("data-image", "IMGSPFP/" + data[i].Imagen).attr("data-category-id", data[i].IDCategoria).attr("data-user-image", "IMGSPFP/" + data[i].FotoUsu).text("Modificar publicacion.")
+                                )
+                            )
+                        )
+                    );
+                }
+
+                postContainer.append(
+                    $("<h6>").addClass("post-title").text(data[i].Titulo),
+                    $("<p>").addClass("post-text").text(data[i].Contenido)
+                );
+
+                if (imagen) {
+                    postContainer.append(imagen);
+                }
+
+                $("#rowPublicaciones").append(postContainer);
             }
             getPaginadorClicks();
 
@@ -230,3 +157,77 @@ function getPaginadorClicks(){
         }
     });
 }
+
+//codigue chido este estaba en jsp mi vida
+function previewImageModal(event) {
+    var input = event.target;
+    var reader = new FileReader();
+
+    reader.onload = function() {
+        var img = document.getElementById('previewModal');
+        img.src = reader.result;
+    };
+
+    reader.readAsDataURL(input.files[0]);
+}
+
+function previewImage(event) {
+    var input = event.target;
+    var reader = new FileReader();
+    
+    reader.onload = function(){
+        var img = document.getElementById('preview');
+        img.src = reader.result;
+    };
+    
+    reader.readAsDataURL(input.files[0]);
+}
+    // Nueva función para llenar el modal con los datos de la publicación
+    function loadPostDataToModal(post) {
+      
+        document.getElementById('modal-postId').value = post.id;
+        document.getElementById('modal-postUsername').textContent = post.username;
+        document.getElementById('modal-postTitle').value = post.title;
+        document.getElementById('modal-postContent').value = post.content;
+        document.getElementById('previewModal').src = post.image;
+        // Seleccionar la categoría en el select
+        let categorySelect = document.getElementById('modal-postCategory');
+        for (let i = 0; i < categorySelect.options.length; i++) {
+          if (categorySelect.options[i].value == post.categoryId) {
+            categorySelect.selectedIndex = i;
+            break;
+          }
+        }
+    
+        // Cambiar la imagen del usuario en el modal
+        document.getElementById('modal-postUserPfp').src = post.userImage;
+      }
+    
+      // Asocia la función a los botones de "Modificar publicación"
+     // Asocia la función a los botones de "Modificar publicación"
+      document.querySelectorAll('.dropdown-item.modify').forEach(button => {
+        button.addEventListener('click', function() {
+          // Simula obtener los datos de la publicación (esto se haría realmente mediante una solicitud AJAX o similar)
+          let post = {
+            id: this.dataset.id,
+            username: this.dataset.username,
+            title: this.dataset.title,
+            content: this.dataset.content,
+            image: this.dataset.image,
+            categoryId: this.dataset.categoryId,
+            userImage: this.dataset.userImage
+          };
+          loadPostDataToModal(post);
+        });
+      });
+      document.querySelectorAll('.dropdown-item.delete').forEach(button => {
+        button.addEventListener('click', function() {
+            // Retrieve the ID from the data-id attribute
+            let postId = this.dataset.id;
+            
+            // Set the ID to a hidden input in the modal or any other element
+            document.getElementById('deleteModalPostId').value = postId;
+    
+           
+        });
+    });

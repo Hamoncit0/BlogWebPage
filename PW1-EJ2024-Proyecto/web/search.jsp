@@ -49,14 +49,19 @@
               </ul>
               <ul class="navbar-nav justify-contend-end">
                 <li>
-                    <form class="d-flex" action="search.jsp" method="get" >
-                      <input class="form-control me-2" type="text" placeholder="Buscar">
-                      <button class="btn btn-primary" type="submit" >Buscar</button>
+                    <form class="d-flex" action="SearchServlet" method="post" >
+                    <input name="palabraBuscador" class="form-control me-2" type="text" placeholder="Buscar">
+                    <button class="btn btn-primary" type="submit" >Buscar</button>
                     </form>
                 </li>
                 <li>
                   <a class="navbar-brand" href="#">
-                    <img src="./imgs/empty.png" alt="Avatar Logo" style="width:40px;" class="rounded-pill" onclick="settingsMenuToggle()"> 
+                    <c:if test="${not empty UserObj.getFoto()}">
+                   <img src="./IMGSPFP/${UserObj.getFoto()}" alt="Avatar Logo" style="width:40px;" class="rounded-pill" onclick="settingsMenuToggle()"> 
+                </c:if>
+               <c:if test="${empty UserObj.getFoto()}">
+                   <img src="./imgs/empty.png"alt="Avatar Logo" style="width:40px;" class="rounded-pill" onclick="settingsMenuToggle()"> 
+               </c:if> 
                   </a>
                 </li>
                 <p class="navbar-username"><%out.println(uwu.getUsuario());%></p>
@@ -70,7 +75,12 @@
               <div class="settings-menu-inner">
     
                 <div class="user-profile">
-                  <img src="imgs/empty.png" class="rounded-pill" alt="">
+                 <c:if test="${not empty UserObj.getFoto()}">
+                    <img src="./IMGSPFP/${UserObj.getFoto()}" alt="Avatar Logo"  class="rounded-pill"> 
+                 </c:if>
+                <c:if test="${empty UserObj.getFoto()}">
+                    <img src="./imgs/empty.png" alt="Avatar Logo" class="rounded-pill"> 
+                </c:if>
                   <div>
                     <p><%out.println(uwu.getUsuario());%> </p>
                     <a href="GetProfilePostsServlet">Ver Perfil</a>
@@ -161,36 +171,14 @@
             <div class="categorias-populares">
               <h2>Categorias populares</h2>
               <ol class="list-group list-group-numbered">
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-                  <div class="ms-2 me-auto">
-                    <div class="fw-bold">Crochet</div>
-                    19k publicaciones
-                  </div>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-                  <div class="ms-2 me-auto">
-                    <div class="fw-bold">Dibujo</div>
-                    16k publicaciones
-                  </div>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-                  <div class="ms-2 me-auto">
-                    <div class="fw-bold">Música</div>
-                    12k publicaciones
-                  </div>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-                  <div class="ms-2 me-auto">
-                    <div class="fw-bold">Puzzles</div>
-                    10k publicaciones
-                  </div>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-                  <div class="ms-2 me-auto">
-                    <div class="fw-bold">Ropa</div>
-                  8k publicaciones
-                  </div>
-                </li>
+                <c:forEach items="${CategoriasBuscadas}" var="catb">
+                   <li class="list-group-item d-flex justify-content-between align-items-start">
+                     <div class="ms-2 me-auto">
+                       <div class="fw-bold"><c:out value="${catb.getCategoria()}"></c:out></div>
+                       <c:out value="${catb.getCantidad()}"></c:out> publicaciones.
+                     </div>
+                   </li>
+               </c:forEach>
               </ol>
             </div>
           </div>

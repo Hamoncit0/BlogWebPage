@@ -49,14 +49,19 @@
           </ul>
           <ul class="navbar-nav justify-contend-end">
             <li>
-                <form class="d-flex" action="search.jsp" method="get" >
-                  <input class="form-control me-2" type="text" placeholder="Buscar">
-                  <button class="btn btn-primary" type="submit" >Buscar</button>
+                <form class="d-flex" action="SearchServlet" method="post" >
+                <input name="palabraBuscador" class="form-control me-2" type="text" placeholder="Buscar">
+                <button class="btn btn-primary" type="submit" >Buscar</button>
                 </form>
             </li>
             <li>
               <a class="navbar-brand" href="#">
-                <img src="./imgs/empty.png" alt="Avatar Logo" style="width:40px;" class="rounded-pill" onclick="settingsMenuToggle()"> 
+                <c:if test="${not empty UserObj.getFoto()}">
+                   <img src="./IMGSPFP/${UserObj.getFoto()}" alt="Avatar Logo" style="width:40px;" class="rounded-pill" onclick="settingsMenuToggle()"> 
+                </c:if>
+               <c:if test="${empty UserObj.getFoto()}">
+                   <img src="./imgs/empty.png"alt="Avatar Logo" style="width:40px;" class="rounded-pill" onclick="settingsMenuToggle()"> 
+               </c:if> 
               </a>
             </li>
             <p class="navbar-username"><%out.println(uwu.getUsuario());%></p>
@@ -70,7 +75,12 @@
           <div class="settings-menu-inner">
 
             <div class="user-profile">
-              <img src="imgs/empty.png" class="rounded-pill" alt="">
+               <c:if test="${not empty UserObj.getFoto()}">
+                   <img src="./IMGSPFP/${UserObj.getFoto()}" alt="Avatar Logo"  class="rounded-pill"> 
+                </c:if>
+               <c:if test="${empty UserObj.getFoto()}">
+                   <img src="./imgs/empty.png" alt="Avatar Logo" class="rounded-pill"> 
+               </c:if>
               <div>
                 <p><%out.println(uwu.getUsuario());%></p>
                 <a href="GetProfilePostsServlet">Ver Perfil</a>
@@ -99,7 +109,7 @@
       <div class="section" id="left">
          <!-- barra de navegacion de la izquierda -->
             <nav class="nav flex-column nav-izquierda">
-              <a class="nav-link active" aria-current="page" href="./home.jsp"><i class="bi bi-house-door-fill"></i> Inicio</a>
+              <a class="nav-link active" aria-current="page" href="GetPostsServlet"><i class="bi bi-house-door-fill"></i> Inicio</a>
               <a class="nav-link" href="./advanced_search.jsp"><i class="bi bi-compass"></i> Explorar</a>
               <a class="nav-link" href="GetProfilePostsServlet"><i class="bi bi-person-circle"></i> Perfil</a>
           </nav>

@@ -166,6 +166,13 @@ public class DAOUsuario {
             
                 System.out.println("Registro updateado correctamente");
                 log = usu;
+                
+               
+                
+                
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d 'de' MMMM 'del' yyyy", new Locale("es", "ES"));
+                log.setFechaNacStr(usu.getFechaNac().format(formatter));
+                //log.setFechaNacStr()
             }
             con.close();
             

@@ -4,7 +4,9 @@
  */
 package servlets;
 
+import DAO.DAOCategoria;
 import DAO.DAOPublicacion;
+import entidades.Categoria;
 import entidades.Publicacion;
 import entidades.Usuario;
 import jakarta.servlet.RequestDispatcher;
@@ -29,6 +31,7 @@ import java.util.List;
 public class MakeAPostServlet extends HttpServlet {
 
     DAOPublicacion daoPub = new DAOPublicacion();
+    DAOCategoria daoCat = new DAOCategoria();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,6 +47,14 @@ public class MakeAPostServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        HttpSession MiSesion = request.getSession();
+        
+        List<Categoria>categorias=daoCat.ObtenerCategorias();
+        MiSesion.setAttribute("Categorias", categorias);
+                
+        List<Categoria>categoriasMasP=daoCat.ObtenerCategoriasMasPublicadas();
+        MiSesion.setAttribute("CategoriasBuscadas", categoriasMasP);
           //Una vez actualizada la pagina hace una consulta otra vez
         List<Publicacion> publicaciones = daoPub.consultarRecientes();
         request.setAttribute("Recientes", publicaciones);

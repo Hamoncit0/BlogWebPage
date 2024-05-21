@@ -53,9 +53,9 @@
       </ul>
       <ul class="navbar-nav justify-contend-end">
         <li>
-          <form class="d-flex" action="search.jsp" method="get" >
-            <input class="form-control me-2" type="text" placeholder="Buscar">
-            <button class="btn btn-primary" type="submit" >Buscar</button>
+          <form class="d-flex" action="SearchServlet" method="post" >
+                <input name="palabraBuscador" class="form-control me-2" type="text" placeholder="Buscar">
+                <button class="btn btn-primary" type="submit" >Buscar</button>
           </form>
         </li>
         <li>
@@ -225,7 +225,7 @@
                       <c:if test="${empty UserObj.getFoto()}">
                         <img src="./imgs/empty.png" alt="" class="rounded-pill profile-picture" id="preview"> 
                       </c:if>   
-                      
+                      <input name="fotoIlegal" value="${UserObj.getFoto()}" hidden/>
                       <h2 class="profile-name">${UserObj.getUsuario()}</h2>
                       <label for="file-upload" class="btn btn-info">Cambiar foto de perfil.</label>
                       <input name="file-uploadCU" style="display:none;" id="file-upload" type="file" accept="image/png, image/jpeg" class="btn btn-info boton-input" onchange="previewImage(event)"/>
@@ -326,6 +326,7 @@
               <div class="add-to-post">
               <label for="modal-file-upload"><a style="color: #6610F2">Agregar una foto <i class="bi bi-image-fill"></i></a></label>
             <input value="Elegir foto." name="Modalfile-upload" id="modal-file-upload" type="file" accept="image/png, image/jpeg" class="btn btn-info boton-input" onchange="previewImageModal(event)"/>
+            <input name="fotoOG" value="${UserObj.getFoto()}" style="display: none"/>
             </div>
           </div>
   

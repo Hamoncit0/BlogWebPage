@@ -366,3 +366,6 @@ input[type="file"] {
     display: none;
 
 }
+.pagination{
+    cursor: pointer;
+}

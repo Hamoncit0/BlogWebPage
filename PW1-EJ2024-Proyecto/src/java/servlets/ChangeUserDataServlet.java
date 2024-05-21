@@ -89,14 +89,14 @@ public class ChangeUserDataServlet extends HttpServlet {
             usu.setUsuario(username);
             usu.setFechaNac(birthday);
             usu.setCorreo(email);
-            if(fileName!=""){
+            if(!fileName.isEmpty()){
              usu.setFoto(fileName);
-            }else{
+            }
+            if(fileName.isEmpty()){
                 usu.setFoto(uwu.getFoto());
                 
             }
-            
-             
+            usu.setEdad(uwu.getEdad());
             
             
             usu.setIdUsuario(uwu.getIdUsuario());
