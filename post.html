@@ -1,0 +1,45 @@
+<div class="post-container" value="${pub.getIdPublicacion()}">
+    <div class="post-row">
+    <div class="user-profile">
+        <c:if test="${not empty pub.getFotoUsu()}">
+             <img src="./IMGSPFP/${pub.getFotoUsu()}" alt="Avatar Logo"  class="rounded-pill"> 
+          </c:if>
+         <c:if test="${empty pub.getFotoUsu()}">
+             <img src="./imgs/empty.png" alt="Avatar Logo" class="rounded-pill"> 
+         </c:if>
+      <div>
+        <p><c:out value="${pub.getUsuario()}"></c:out></p>
+        <span><c:out value="${pub.getFechaAlta()}"></c:out></span>
+        <br>
+        <span>Categoria: <c:out value="${pub.getCategoria()}"></c:out></span>
+      </div>
+    </div>
+        
+    <c:if test="${pub.getIDUsuario()== UserObj.getIdUsuario()}">
+    <div class="dropstart">
+      <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        
+        <i class="bi bi-three-dots-vertical"></i>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item delete" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="${pub.getIdPublicacion()}">Eliminar publicacion</a></li>
+        <li><a class="dropdown-item modify" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal1"
+        data-username="${pub.getUsuario()}" data-id="${pub.getIdPublicacion()}"
+        data-title="${pub.getTitulo()}"
+        data-content="${pub.getContenido()}"
+        data-image="IMGSPFP/${pub.getImagen()}"
+        data-category-id="${pub.getIDCategoria()}"
+        data-user-image="IMGSPFP/${pub.getFotoUsu()}">Modificar publicacion</a></li>
+      </ul>
+    </div>
+    </c:if>
+      
+    </div>
+    <h6 class="post-title"><c:out value="${pub.getTitulo()}"></c:out></h6>
+    <p class="post-text"><c:out value="${pub.getContenido()}"></c:out> </p>
+    <c:if test="${not empty pub.getImagen()}">
+    <img src="IMGSPFP/${pub.getImagen()}" alt="" class="post-image">
+        
+    </c:if>
+    
+   </div>

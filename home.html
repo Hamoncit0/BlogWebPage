@@ -11,7 +11,7 @@
 </head>
 <body>
     <!-- barra de navegacion de arriba -->
-    <nav class="navbar navbar-expand-sm bg-primary navbar-dark barra-nav">
+      <nav class="navbar navbar-expand-sm bg-primary navbar-dark barra-nav">
 
         <div class="container-fluid">
           <!-- Links -->
@@ -26,7 +26,7 @@
                 <a class="nav-link" href="#">Para ti</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Explora</a>
+                <a class="nav-link" href="./advanced_search.html">Explora</a>
               </li>
           </ul>
           <ul class="navbar-nav justify-contend-end">
@@ -81,9 +81,9 @@
       <div class="section" id="left">
          <!-- barra de navegacion de la izquierda -->
             <nav class="nav flex-column nav-izquierda">
-              <a class="nav-link active" aria-current="page" href="./home.html"><i class="bi bi-house-door-fill"></i> Inicio</a>
-              <a class="nav-link" href="#"><i class="bi bi-compass"></i> Explorar</a>
-              <a class="nav-link" href="./profile.html"><i class="bi bi-person-circle"></i> Perfil</a>
+              <a class="nav-link active" aria-current="page" href="./home.html"><i class="bi bi-house-door-fill"></i> <span class="nav-text">Inicio</span></a>
+              <a class="nav-link" href="./advanced_search.html"><i class="bi bi-compass"></i><span class="nav-text">Explorar</span></a>
+              <a class="nav-link" href="./profile.html"><i class="bi bi-person-circle"></i> <span class="nav-text">Perfil</span></a>
           </nav>
       </div>
       <div class="section-middle" id="middle">
@@ -92,7 +92,12 @@
             <img src="imgs/empty.png" class="rounded-pill" alt="">
             <div>
               <p>Username</p>
-              <small>Categoría <i class="bi bi-caret-down-fill"></i></small>
+              <select style="margin-top: 5px;" class="form-select" id="inputGroupSelect01">
+                <option selected>Categoria</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
             </div>
           </div>
           
@@ -130,7 +135,7 @@
           </div>
           </div>
           <h6 class="post-title">Titulo bonito</h6>
-          <p class="post-text">Texto bonito uwu <a href="">#ItisPretty</a> <span>@Username1</span> </p>
+          <p class="post-text">Texto bonito uwu </p>
           <img src="imgs/image-feed.png" alt="" class="post-image">
           
          </div>
@@ -159,7 +164,7 @@
           </div>
           
           <h6 class="post-title">Titulo bonito</h6>
-          <p class="post-text">Texto bonito uwu <a href="">#ItisPretty</a> <span>@Username1</span> </p>
+          <p class="post-text">Texto bonito uwu </p>
           <img src="imgs/download.png" alt="" class="post-image">
           
          </div>
@@ -188,7 +193,7 @@
           </div>
           
           <h6 class="post-title">Titulo bonito</h6>
-          <p class="post-text">Texto bonito uwu <a href="">#ItisPretty</a> <span>@Username1</span> </p>
+          <p class="post-text">Texto bonito uwu  </p>
           <img src="imgs/image-feed1.png" alt="" class="post-image">
          </div>
           <!-- Post #4 -->
@@ -216,7 +221,7 @@
             </div>
             
           <h6 class="post-title">Titulo bonito</h6>
-            <p class="post-text">Texto bonito uwu <a href="">#ItisPretty</a> <span>@Username1</span> </p>
+            <p class="post-text">Texto bonito uwu </p>
             
           </div>
          <button class="load-button btn btn-light">Cargar mas</button>
@@ -320,7 +325,8 @@
       </div>
     </div>
   </div>
-</div>
+  </div>
+ </div>
 </body>
 
 
