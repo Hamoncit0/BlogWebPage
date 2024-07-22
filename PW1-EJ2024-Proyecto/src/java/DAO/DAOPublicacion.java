@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DAO;
+ package DAO;
 
 
 
@@ -196,7 +196,7 @@ public class DAOPublicacion {
         Connection con;
         PreparedStatement pst;
         ResultSet rs;
-        String query = "SELECT pub.*, cat.Categoria, cat.IDCategoria, usu.Usuario, usu.Foto FROM tb_publicacion pub JOIN tb_categoria cat ON pub.IDCategoria = cat.IDCategoria JOIN tb_usuario usu ON pub.IDUsuario = usu.IDUsuario WHERE pub.Estatus = 1 ORDER BY FechaAlta DESC LIMIT "+index+", "+cantidad+";";
+        String query = "SELECT pub.*, cat.Categoria, usu.Usuario, usu.Foto FROM tb_publicacion pub JOIN tb_categoria cat ON pub.IDCategoria = cat.IDCategoria JOIN tb_usuario usu ON pub.IDUsuario = usu.IDUsuario WHERE pub.Estatus = 1 ORDER BY FechaAlta DESC LIMIT "+index+", "+cantidad+";";
         
         try{
           //se conecta
@@ -217,7 +217,6 @@ public class DAOPublicacion {
                 pub.setContenido(rs.getString("Contenido"));
                 pub.setImagen(rs.getString("Imagen"));
                 pub.setCategoria(rs.getString("Categoria"));
-                pub.setIDCategoria(rs.getInt("IDCategoria"));
                 pub.setIDUsuario(rs.getInt("IDUsuario"));
                 pub.setFotoUsu(rs.getString("Foto"));
                 //lo recibe en timestamp
@@ -534,5 +533,42 @@ public class DAOPublicacion {
         return lista;
         }
         
+    }
+
+    public Publicacion consultarPorId(int id) {
+        Publicacion pub = null;
+        Connection con;
+        PreparedStatement pst;
+        ResultSet rs;
+        String query = "SELECT * FROM tb_publicacion WHERE IDPublicacion = ? AND Estatus = 1;";
+        
+        try {
+            Class.forName(db.getDriver());
+            con = DriverManager.getConnection(
+                db.getUrl() + db.getDatabase(),
+                db.getUser(),
+                db.getPass()
+            );
+            pst = con.prepareStatement(query);
+            pst.setInt(1, id);
+            rs = pst.executeQuery();
+            if(rs.next()) {
+                pub = new Publicacion();
+                pub.setIdPublicacion(rs.getInt("IDPublicacion"));
+                pub.setTitulo(rs.getString("Titulo"));
+                pub.setContenido(rs.getString("Contenido"));
+                pub.setImagen(rs.getString("Imagen"));
+                pub.setIDUsuario(rs.getInt("IDUsuario"));
+                pub.setIDCategoria(rs.getInt("IDCategoria"));
+                Timestamp timestamp = rs.getTimestamp("FechaAlta");
+                LocalDateTime dateTime = timestamp.toLocalDateTime();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d 'de' MMMM 'de' yyyy h:mma", new Locale("es", "ES"));
+                String formattedDateTime = dateTime.format(formatter);
+                pub.setFechaAlta(formattedDateTime);
+            }
+        } catch(SQLException | ClassNotFoundException e) {
+            System.out.println("ERROR EN consultarPorId: " + e.getMessage());
+        }
+        return pub;
     }
 }

@@ -52,7 +52,7 @@ public class SignUpServlet extends HttpServlet {
             fileName = getFileName(part);
             if(!fileName.isEmpty()){
                 //guardar imagen
-                String uploadPath= "C:\\Users\\yazmi\\OneDrive\\Documents\\Facu\\6to semestre\\Programacion web Gp. 51\\PW1-EJ2024-Proyecto\\PW1-EJ2024-Proyecto\\PW1-EJ2024-Proyecto\\web\\IMGSPFP";
+                String uploadPath= "C:\\Users\\yazmi\\OneDrive\\Documents\\Facu\\6to semestre\\Programacion web Gp. 51\\PW1-EJ2024-Proyecto-branch_backEnd\\PW1-EJ2024-Proyecto\\web\\IMGSPFP";
                 File fileSaveDir = new File (uploadPath);
                 if(!fileSaveDir.exists()){
                     fileSaveDir.mkdirs();

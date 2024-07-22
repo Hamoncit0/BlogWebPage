@@ -6,6 +6,7 @@ package servlets;
 
 import DAO.DAOPublicacion;
 import entidades.Publicacion;
+import entidades.Usuario;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
 
@@ -40,12 +42,28 @@ public class ChangePostServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         System.out.println("LLEGO AL CHANGE POST SERVLET METHOD POST");
-        
+          HttpSession session = request.getSession();
+        Usuario usuario = (Usuario) session.getAttribute("UserObj");
+
+        if (usuario == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
         String Titulo = request.getParameter("ModalTitulo");
         String Contenido = request.getParameter("ModalContenido");
         String Categoria = request.getParameter("ModalCategoria");
         String IDPub = request.getParameter("ModalID");
         int id = Integer.parseInt(IDPub);
+        
+        Publicacion pubExistente = daoPub.consultarPorId(id);
+
+        if (pubExistente == null || pubExistente.getIDUsuario() != usuario.getIdUsuario()) {
+            request.setAttribute("error", "No tienes permiso para editar esta publicación.");
+            RequestDispatcher rs = request.getRequestDispatcher("error.jsp");
+            rs.forward(request, response);
+            return;
+        }
+        
         //CHECAR SI HAY UNA IMAGEN
         //filename
         String fileName = null;

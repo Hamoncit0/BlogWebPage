@@ -7,8 +7,8 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
-<project name="PW1-EJ2024-Proyecto" default="default" basedir=".">
-    <description>Builds, tests, and runs the project PW1-EJ2024-Proyecto.</description>
+<project name="PW1-EJ2024-ProyectoValidaciones" default="default" basedir=".">
+    <description>Builds, tests, and runs the project PW1-EJ2024-ProyectoValidaciones.</description>
     <import file="nbproject/build-impl.xml"/>
     <!--
 

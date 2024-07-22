@@ -18,6 +18,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 
 /**
@@ -81,6 +82,54 @@ public class ChangeUserDataServlet extends HttpServlet {
 
             Usuario uwu = (Usuario) request.getSession().getAttribute("UserObj");
         System.out.println("Llegodespues del fileName");
+        StringBuilder errorMsg = new StringBuilder();
+        
+        // Validar Nombre(s) y Apellidos
+        if (!isValidAlphabetic(firstName)) {
+            errorMsg.append("Nombre(s) solo puede contener caracteres alfabéticos.<br>");
+        }
+        if (!isValidAlphabetic(secondName)) {
+            errorMsg.append("Segundo Nombre solo puede contener caracteres alfabéticos.<br>");
+        }
+        if (!isValidAlphabetic(lastName)) {
+            errorMsg.append("Apellido Paterno solo puede contener caracteres alfabéticos.<br>");
+        }
+        if (!isValidAlphabetic(lastName2)) {
+            errorMsg.append("Apellido Materno solo puede contener caracteres alfabéticos.<br>");
+        }
+
+       if (!isValidEmail(email)) {
+            errorMsg.append("Correo electrónico no es válido.<br>");
+        }
+        
+        // Validar Fecha de Nacimiento
+        try {
+    String birthdayStr = request.getParameter("birthdayCU");
+    if (birthdayStr != null && !birthdayStr.isEmpty()) {
+
+        if (!isValidDate(birthday)) {
+            errorMsg.append("Fecha de Nacimiento no es válida o es después del día actual.<br>");
+        }
+    } else {
+        errorMsg.append("Fecha de Nacimiento es requerida.<br>");
+    }
+} catch (DateTimeParseException e) {
+    errorMsg.append("Formato de Fecha de Nacimiento no es válido.<br>");
+}
+
+        
+//        // Validar Nombre de Usuario Único
+//        if (!isUniqueUsername(username, uwu.getIdUsuario())) {
+//            errorMsg.append("Nombre de usuario ya está en uso.<br>");
+//        }
+
+        if (errorMsg.length() > 0) {
+            request.setAttribute("error", errorMsg.toString());
+            RequestDispatcher rs = request.getRequestDispatcher("profile.jsp");
+            rs.forward(request, response);
+            return;
+        }
+        
             Usuario usu = new Usuario();
             usu.setNombre(firstName);
             usu.setSNombre(secondName); 
@@ -89,14 +138,15 @@ public class ChangeUserDataServlet extends HttpServlet {
             usu.setUsuario(username);
             usu.setFechaNac(birthday);
             usu.setCorreo(email);
-            if(!fileName.isEmpty()){
+            if(fileName!=""){
              usu.setFoto(fileName);
             }
-            if(fileName.isEmpty()){
-                usu.setFoto(uwu.getFoto());
+            if(fileName == ""){
+                usu.setFoto(request.getParameter("fotoOG"));
                 
             }
-            usu.setEdad(uwu.getEdad());
+            
+             System.out.println("Foto usu:" + uwu.getUsuario());
             
             
             usu.setIdUsuario(uwu.getIdUsuario());
@@ -142,4 +192,22 @@ public class ChangeUserDataServlet extends HttpServlet {
     
     return "";
     }
+    private boolean isValidAlphabetic(String input) {
+        return input != null && input.matches("^[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+$");
+    }
+
+    private boolean isValidDate(LocalDate date) {
+        return date != null && !date.isAfter(LocalDate.now());
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^.+@.+\\.com$";
+        return email != null && email.matches(emailRegex);
+    }
+
+//    private boolean isUniqueUsername(String username, int userId) {
+//        Usuario existingUser = daoUsu.consultarPorNombreUsuario(username);
+//        return existingUser == null || existingUser.getIdUsuario() == userId;
+//    }
+
 }

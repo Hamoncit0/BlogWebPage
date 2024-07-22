@@ -87,7 +87,7 @@
                    <img src="./imgs/empty.png" alt="Avatar Logo" class="rounded-pill"> 
                </c:if>
               <div>
-                  <p id="NombreUsuScriptUnico" data-usuario="${UserObj.getUsuario()}"><%out.println(uwu.getUsuario());%></p>
+                <p id="NombreUsuScripsUnico" data-usuario="${UserObj.getUsuario()}"><%out.println(uwu.getUsuario());%></p>
                 <a href="GetProfilePostsServlet">Ver Perfil</a>
               </div>
             </div>
@@ -120,15 +120,15 @@
           </nav>
       </div>
       <div class="section-middle" id="middle">
-          <form action="MakeAPostServlet" method="post"  enctype="multipart/form-data">
-              <div class="make-a-Post">
-          <div class="user-profile">
-                <c:if test="${not empty UserObj.getFoto()}">
-                   <img src="./IMGSPFP/${UserObj.getFoto()}" alt="Avatar Logo"  class="rounded-pill"> 
-                </c:if>
-               <c:if test="${empty UserObj.getFoto()}">
-                   <img src="./imgs/empty.png" alt="Avatar Logo" class="rounded-pill"> 
-               </c:if>
+          <form id="postForm" action="MakeAPostServlet" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+    <div class="make-a-Post">
+        <div class="user-profile">
+            <c:if test="${not empty UserObj.getFoto()}">
+               <img src="./IMGSPFP/${UserObj.getFoto()}" alt="Avatar Logo"  class="rounded-pill"> 
+            </c:if>
+            <c:if test="${empty UserObj.getFoto()}">
+               <img src="./imgs/empty.png" alt="Avatar Logo" class="rounded-pill"> 
+            </c:if>
             <div>
               <p><%out.println(uwu.getUsuario());%></p>
               <select style="margin-top: 5px;" class="form-select" id="inputGroupSelect01" name="Categoria">
@@ -138,25 +138,42 @@
                 </c:forEach>
               </select>
             </div>
-          </div>
-          
-          <div class="input-container form-floating">
+        </div>
+        
+        <div class="input-container form-floating">
             <input type="text" name="Titulo" id="" class="input-titulo" placeholder="Titulo">
-            <textarea rows="3" placeholder="Contenido" name="Contenido" id="floatingTextarea2" style="height: 100px" ></textarea>
+            <textarea rows="3" placeholder="Contenido" name="Contenido" id="floatingTextarea2" style="height: 100px"></textarea>
             <img src="" style="max-height: 300px; max-width: 300px;" alt="" class="" id="preview">
             <div class="add-to-post">
-            
-           <label for="file-upload"><a style="color: #6610F2">Agregar una foto <i class="bi bi-image-fill"></i></a></label>
-            <input value="Elegir foto." name="file-upload" id="file-upload" type="file" accept="image/png, image/jpeg" class="btn btn-info boton-input" onchange="previewImage(event)"/>
-           
-            <button type="submit" class="btn btn-primary btn-sm">Publicar</button>
-          </div>
+                <label for="file-upload"><a style="color: #6610F2">Agregar una foto <i class="bi bi-image-fill"></i></a></label>
+                <input value="Elegir foto." name="file-upload" id="file-upload" type="file" accept="image/png, image/jpeg" class="btn btn-info boton-input" onchange="previewImage(event)"/>
+                <button type="submit" class="btn btn-primary btn-sm">Publicar</button>
+            </div>
         </div>
+    </div>
+</form>
 
-         </div>
-              
-              
-          </form>
+<script>
+function validateForm() {
+    var category = document.getElementById('inputGroupSelect01').value;
+    var title = document.querySelector('input[name="Titulo"]').value;
+    var content = document.querySelector('textarea[name="Contenido"]').value;
+
+    if (category === "" || category === "Categoria") {
+        alert("Por favor, seleccione una categoría.");
+        return false;
+    }
+    if (title.trim() === "") {
+        alert("Por favor, ingrese un título.");
+        return false;
+    }
+    if (content.trim() === "") {
+        alert("Por favor, ingrese el contenido.");
+        return false;
+    }
+    return true;
+}
+</script>
               <div class="publicaciones" id="rowPublicaciones">
                 
               <c:forEach items="${Recientes}" var="pub">
@@ -210,6 +227,11 @@
               <button class="btn btn-outline-primary btn-sm" id="btnVerTodas" onclick="getPublicaciones(0)">Ver todas</button>
          <nav aria-label="Page navigation example" >
             <ul class="pagination" id="paginador">
+              <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
             </ul>
           </nav>
       </div>
@@ -308,7 +330,91 @@
   </div>
  </div>
     </body>
-     
+      <script>
+        
+          function previewImageModal(event) {
+            var input = event.target;
+            var reader = new FileReader();
+
+            reader.onload = function() {
+                var img = document.getElementById('previewModal');
+                img.src = reader.result;
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+
+        
+    </script>
+    <script>
+     function previewImage(event) {
+            var input = event.target;
+            var reader = new FileReader();
+            
+            reader.onload = function(){
+                var img = document.getElementById('preview');
+                img.src = reader.result;
+            };
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+  
+    </script>
+    <script>
+        
+         // Nueva función para llenar el modal con los datos de la publicación
+  function loadPostDataToModal(post) {
+      
+    document.getElementById('modal-postId').value = post.id;
+    document.getElementById('modal-postUsername').textContent = post.username;
+    document.getElementById('modal-postTitle').value = post.title;
+    document.getElementById('modal-postContent').value = post.content;
+    document.getElementById('previewModal').src = post.image;
+    // Seleccionar la categoría en el select
+    let categorySelect = document.getElementById('modal-postCategory');
+    for (let i = 0; i < categorySelect.options.length; i++) {
+      if (categorySelect.options[i].value == post.categoryId) {
+        categorySelect.selectedIndex = i;
+        break;
+      }
+    }
+
+    // Cambiar la imagen del usuario en el modal
+    document.getElementById('modal-postUserPfp').src = post.userImage;
+  }
+
+  // Asocia la función a los botones de "Modificar publicación"
+ // Asocia la función a los botones de "Modificar publicación"
+  document.querySelectorAll('.dropdown-item.modify').forEach(button => {
+    button.addEventListener('click', function() {
+      // Simula obtener los datos de la publicación (esto se haría realmente mediante una solicitud AJAX o similar)
+      let post = {
+        id: this.dataset.id,
+        username: this.dataset.username,
+        title: this.dataset.title,
+        content: this.dataset.content,
+        image: this.dataset.image,
+        categoryId: this.dataset.categoryId,
+        userImage: this.dataset.userImage
+      };
+      loadPostDataToModal(post);
+    });
+  });
+    </script>
+    <script>
+        document.querySelectorAll('.dropdown-item.delete').forEach(button => {
+    button.addEventListener('click', function() {
+        // Retrieve the ID from the data-id attribute
+        let postId = this.dataset.id;
+        
+        // Set the ID to a hidden input in the modal or any other element
+        document.getElementById('deleteModalPostId').value = postId;
+
+       
+    });
+});
+    </script>
+    
     
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

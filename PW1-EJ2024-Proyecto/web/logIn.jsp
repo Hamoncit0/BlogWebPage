@@ -96,11 +96,11 @@
                             <input type="text"  class="form-control" id="secondName" name="secondName" placeholder="ej. Maria, Diego" optional>
                             </div>
                            <div class="mb-3">
-                               <label for="lastName" class="form-label">Apellido Materno</label>
+                               <label for="lastName" class="form-label">Apellido Paterno</label>
                                <input type="text"  class="form-control" id="lastName" name="lastName" placeholder="ej. Perez, Ramirez" required>
                            </div>
                            <div class="mb-3">
-                               <label for="lastName2" class="form-label">Apellido Paterno</label>
+                               <label for="lastName2" class="form-label">Apellido Materno</label>
                                <input type="text"  class="form-control" id="lastName2" name="lastName2" placeholder="ej. Perez, Ramirez" required>
                            </div>
                            <div class="mb-3">

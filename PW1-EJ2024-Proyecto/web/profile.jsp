@@ -25,6 +25,7 @@
         <link rel="stylesheet" href="./css/scss/custom.css">
         <link rel="stylesheet" href="./css/style.css">
     </head>
+    
     <body
         <% 
             Usuario usuario = new Usuario(); 
@@ -137,6 +138,10 @@
                 <p>Edad: <%out.println(uwu.getEdad());%>  </p>
                 <p>Fecha de nacimiento: <%out.println(uwu.getFechaNacStr());%>  </p>
             </div>
+            <div class="profile-menu btn-group">
+                <button type="button" class="btn btn-outline-primary">Publicaciones</button>
+                <button type="button" class="btn btn-outline-primary">Fotos</button>
+            </div>
         </div>
          <c:forEach items="${tusPosts}" var="pub">
                  <div class="post-container" value="${pub.getIdPublicacion()}">
@@ -221,7 +226,12 @@
                       <c:if test="${empty UserObj.getFoto()}">
                         <img src="./imgs/empty.png" alt="" class="rounded-pill profile-picture" id="preview"> 
                       </c:if>   
-                      <input name="fotoIlegal" value="${UserObj.getFoto()}" hidden/>
+                        <c:if test="${not empty error}">
+        <div class="alert alert-danger" role="alert">
+            <c:out value="${error}" escapeXml="false"/>
+        </div>
+    </c:if>
+                        
                       <h2 class="profile-name">${UserObj.getUsuario()}</h2>
                       <label for="file-upload" class="btn btn-info">Cambiar foto de perfil.</label>
                       <input name="file-uploadCU" style="display:none;" id="file-upload" type="file" accept="image/png, image/jpeg" class="btn btn-info boton-input" onchange="previewImage(event)"/>
